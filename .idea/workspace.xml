@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="55d999b5-4afa-4946-8ae5-6614a8e1362f" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1eZFpICn1pgnk3CCEwDOcC6xEqr" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Indicators/Indicator.py" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\My Projects\PyChar\Backtest" />
+      <recent name="E:\My Projects\PyChar\Backtest\Indicators" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Indicator" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="Backtest" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\Darshan\AppData\Local\Programs\Python\Python38\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Indicators" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Indicators/Indicator.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="55d999b5-4afa-4946-8ae5-6614a8e1362f" name="Default Changelist" comment="" />
+      <created>1594521389867</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1594521389867</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="191" y="5" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1594524269725">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="191" y="5" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.720@0.0.1366.720" timestamp="1594524269725" />
+    <state x="586" y="50" key="FileChooserDialogImpl" timestamp="1594524256740">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state x="586" y="50" key="FileChooserDialogImpl/0.0.1366.720@0.0.1366.720" timestamp="1594524256740" />
+    <state width="1338" height="154" key="GridCell.Tab.0.bottom" timestamp="1594537708299">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state width="1338" height="154" key="GridCell.Tab.0.bottom/0.0.1366.720@0.0.1366.720" timestamp="1594537708299" />
+    <state width="1338" height="154" key="GridCell.Tab.0.center" timestamp="1594537708283">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state width="1338" height="154" key="GridCell.Tab.0.center/0.0.1366.720@0.0.1366.720" timestamp="1594537708283" />
+    <state width="1338" height="154" key="GridCell.Tab.0.left" timestamp="1594537708283">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state width="1338" height="154" key="GridCell.Tab.0.left/0.0.1366.720@0.0.1366.720" timestamp="1594537708283" />
+    <state width="1338" height="154" key="GridCell.Tab.0.right" timestamp="1594537708283">
+      <screen x="0" y="0" width="1366" height="720" />
+    </state>
+    <state width="1338" height="154" key="GridCell.Tab.0.right/0.0.1366.720@0.0.1366.720" timestamp="1594537708283" />
+  </component>
+</project>

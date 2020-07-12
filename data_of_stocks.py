@@ -12,7 +12,7 @@ nifty_500 = ['3MINDIA.NS','ACC.NS','AIAENG.NS','APLAPOLLO.NS','AUBANK.NS','AARTI
 
 # datetime is a pandas function to access data of that particular date
 # datetime(year , month , day)
-start = datetime(2020,6,7)
+start = datetime(2019,6,7)
 end = datetime(2020,7,7)
 
 # web.DataReader helps to access data of a particular stock from the site you want from starting date to ending date
@@ -22,7 +22,6 @@ data = web.DataReader('ACC.NS', 'yahoo', start, end)
 
 # data.reset_index() will shift the Date from Header column to normal column you can print to check
 data_reset = data.reset_index()
-
 # This line is compulsory to make Date  column readable to python programme
 data_reset['date_ax'] = data_reset['Date'].apply(lambda date: date2num(date))
 
