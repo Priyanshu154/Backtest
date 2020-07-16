@@ -370,3 +370,60 @@ def pivot_points():
 
 pivot_points()
 #Pivot Points Ends Here
+
+#MACD Starts From Here
+def EMA_MACD(t, macd):
+    sma= 0.0
+    n = len(macd)
+    for i in range(t):
+        sma += macd[i]
+    sma = sma/(t)
+    ema = []
+    ema.append(sma)
+    m = 2/(t+1)
+    for i in range(t,n):
+        e = macd[i]*m + ema[i-t]*(1-m)
+        ema.append(e)
+    return ema
+
+def MACD(x,y,z):
+    val_pr = EMA(close, x)
+    val2_pr = EMA(close, y)
+    val = []
+    val2 = []
+    for i in range(x):
+        val.append(0)
+    for i in range(y):
+        val2.append(0)
+
+    for i in range(len(val_pr)):
+        val.append(val_pr[i])
+    for i in range(len(val2_pr)):
+        val2.append(val2_pr[i])
+
+    macd_line = []
+    macd_histogram = []
+    signal_line = []
+
+
+
+    for i in range(len(val)):
+        macd_line.append(val[i]-val2[i])
+
+    for i in range(z-1):
+        signal_line.append(0)
+
+    signal_line_pr = EMA_MACD(z,macd_line)
+
+    for i in range(len(signal_line_pr)):
+        signal_line.append(signal_line_pr[i])
+
+    for i in range(len(val)):
+        macd_histogram.append(macd_line[i] - signal_line[i])
+
+    print(macd_line)
+    print(signal_line)
+    print(macd_histogram)
+
+MACD(12,26,9)
+#MACD Ends Here
