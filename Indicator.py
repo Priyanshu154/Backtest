@@ -3,6 +3,7 @@ import pandas_datareader.data as web
 from datetime import datetime
 from pandas.util.testing import assert_frame_equal
 from matplotlib.dates import date2num
+import math
 
 # Name of top 50 stocks of NSE
 nifty_50 = ['ADANIPORTS.NS','ASIANPAINT.NS','AXISBANK.NS','BAJAJ-AUTO.NS','BAJAJFINSV.NS','BAJFINANCE.NS','BHARTIARTL.NS','BPCL.NS','BRITANNIA.NS','CIPLA.NS','COALINDIA.NS','DRREDDY.NS','EICHERMOT.NS','GAIL.NS','GRASIM.NS','HCLTECH.NS','HDFC.NS','HDFCBANK.NS','HEROMOTOCO.NS','HINDALCO.NS','HINDUNILVR.NS','ICICIBANK.NS','INDUSINDBK.NS','INFRATEL.NS','INFY.NS','IOC.NS','ITC.NS','JSWSTEEL.NS','KOTAKBANK.NS','LT.NS','M&M.NS','MARUTI.NS','NESTLEIND.NS','NTPC.NS','ONGC.NS','POWERGRID.NS','RELIANCE.NS','SBIN.NS','SUNPHARMA.NS','TATAMOTORS.NS','TATASTEEL.NS','TCS.NS','TECHM.NS','TITAN.NS','ULTRACEMCO.NS','UPL.NS','VEDL.NS','WIPRO.NS','YESBANK.NS','ZEEL.NS']
@@ -427,3 +428,35 @@ def MACD(x,y,z):
 
 MACD(12,26,9)
 #MACD Ends Here
+
+#Bollinger Band Starts Here
+def bollinger_band(close,n,r):
+    up = []
+    lo = []
+    ma = []
+    for i in range(n-1):
+        up.append(0)
+        lo.append(0)
+        ma.append(0)
+    for i in range(len(close)-19):
+        sum = 0
+        sqr = 0
+        for j in range(i, n+i):
+            sum = sum + close[j]
+        meann = sum/n
+        ma.append(sum / n)
+        for z in range(i, n+i):
+            sq = close[z]-meann
+            sqr = sqr + (sq*sq)
+        varr = sqr/n
+        std = math.sqrt(varr)
+        up.append(meann + (r*std))
+        lo.append(meann - (r*std))
+    return up,lo,ma
+
+upper_band, lower_band,middle_band = bollinger_band(close,20,2)
+print(middle_band)
+print(upper_band)
+print(lower_band)
+
+#Bollinger Band Ends here
