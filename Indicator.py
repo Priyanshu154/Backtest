@@ -14,7 +14,7 @@ nifty_500 = ['3MINDIA.NS','ACC.NS','AIAENG.NS','APLAPOLLO.NS','AUBANK.NS','AARTI
 # datetime is a pandas function to access data of that particular date
 # datetime(year , month , day)
 start = datetime(2019,6,7)
-end = datetime(2020,10,7)
+end = datetime(2020,7,18)
 
 # web.DataReader helps to access data of a particular stock from the site you want from starting date to ending date
 # data = web.DataReader('Stock Name', 'Website', starting date, ending date)
@@ -33,50 +33,13 @@ low = data_reset['Low'].to_list()
 openn = data_reset['Open'].to_list()
 date = data_reset['Date'].to_list()
 dt = data_reset['date_ax'].to_list()
-
-
-"""
-Maine iss link se sikha tha formula:  https://www.macroption.com/rsi-calculation/
-Example of the formula:               https://www.macroption.com/rsi-calculator/
-RSI = 100 - (100/(1+rs))
-where 
-    rs = (avg Ups)/(avg Downs)
-    avgUPs matlab averagly stock kitna up move kiya (close[i] > close[i-1])
-    avgDowns "      "       "     "    downn " "    (close[i] < close[i-1])
-Now 
-   To calculate avgUps/avgDowns, three methods are there:
-        1. Simple Moving average
-        2. Exponential Moving average
-        3. Wilder Smoothing method
-   popular sites like tradingview uses the third one so we will also opt for third one
-   
-   To calculate rsi using the third method:
-        for i in range(t, n):
-            diff = close[i]- close[i-1] 
-            if(diff > 0):
-               avgUps = (1/t)*diff + ( (t-1)/(t) )*prev_avgUps
-               avgDowns =( (t-1)/(t) )*prev_avgUps
-            else:
-               avgUps =( (t-1)/(t) )*prev_avgUps
-               avgDowns = (1/t)*(-diff) + ( (t-1)/(t) )*prev_avgUps            
-            rs = avgUps/avgDowns
-            rsi = ( 100 - (100/(1+rs)) ) 
-            //Yaha tak ek din ka rsi mila isme loop chalaya hai to rsi array bana dene ki 
-        where
-            t is the time period (generally 14)
-            prev_avgUps uske piche wala avgUp
-            diff = difference of the values of current and previous price            
-        ab puchoge first time loop me prev_avgUps ki value kya hogi?:
-            first time prev_avgUps ki value simply pichle t days ka simple average
-        Aiye code dekhte hai aur isme dekhenge konsi line kis step ko belong karti hai
-"""
-def RSI(t):
+def RSI(close, t):
     n = len(close)
     rsi = []
-    avgU = []
-    avgD = []
     Ups = 0.0
     Downs = 0.0
+    for j in range(t-1):
+        rsi.append(0)
     #Ye sabse pehla avgU/avgD find karne ke liye simple average vala step
     for i in range(1,t):
         diff = close[i] - close[i-1]
@@ -90,7 +53,6 @@ def RSI(t):
     #simple average mil gaya to hamara pehla rsi bi mil gaya
     rs = preU/preD
     rsi.append( (100 - (100/(1+rs))) )
-
     #yaha se prev_avgUp vala loop
     Ups = 0.0
     Downs = 0.0
@@ -118,17 +80,15 @@ def EMA(close, t):
         sma += close[i]
     sma = sma/(t)
     ema = []
+    for j in range(t-1):
+        ema.append(0)
     ema.append(sma)
     m = 2/(t+1)
     for i in range(t,n):
         e = close[i]*m + ema[i-t]*(1-m)
         ema.append(e)
     return ema
-
-val = EMA(close, 9)
-print(val)
 #EMA ends here
-
 
 # From Here Pivot Points
 final_high = []
@@ -341,7 +301,6 @@ def pivot_points():
             resistance_2_pr.append(pivot_point_pr[i] + final_high[i] - final_low[i])
             support_3_pr.append(pivot_point_pr[i] - 2*final_high[i] + 2*final_low[i])
             resistance_3_pr.append(pivot_point_pr[i] + 2*final_high[i] - 2*final_low[i])
-
     for i in range(final_counts[0]):
         pivot_point.append(0)
         resistance_1.append(0)
@@ -350,7 +309,6 @@ def pivot_points():
         support_1.append(0)
         support_2.append(0)
         support_3.append(0)
-
     for i in range(1, len(final_counts)):
         for j in range(final_counts[i]):
             pivot_point.append(pivot_point_pr[i])
@@ -360,16 +318,8 @@ def pivot_points():
             support_1.append(support_1_pr[i])
             support_2.append(support_2_pr[i])
             support_3.append(support_3_pr[i])
+    return pivot_point,support_1,support_2,support_3,resistance_1,resistance_2,resistance_3
 
-    print(pivot_point)
-    print(support_1)
-    print(support_2)
-    print(support_3)
-    print(resistance_1)
-    print(resistance_2)
-    print(resistance_3)
-
-pivot_points()
 #Pivot Points Ends Here
 
 #MACD Starts From Here
@@ -405,28 +355,16 @@ def MACD(x,y,z):
     macd_line = []
     macd_histogram = []
     signal_line = []
-
-
-
     for i in range(len(val)):
         macd_line.append(val[i]-val2[i])
-
     for i in range(z-1):
         signal_line.append(0)
-
     signal_line_pr = EMA_MACD(z,macd_line)
-
     for i in range(len(signal_line_pr)):
         signal_line.append(signal_line_pr[i])
-
     for i in range(len(val)):
         macd_histogram.append(macd_line[i] - signal_line[i])
-
-    print(macd_line)
-    print(signal_line)
-    print(macd_histogram)
-
-MACD(12,26,9)
+    return macd_line,signal_line,macd_histogram
 #MACD Ends Here
 
 #Bollinger Band Starts Here
@@ -453,10 +391,5 @@ def bollinger_band(close,n,r):
         up.append(meann + (r*std))
         lo.append(meann - (r*std))
     return up,lo,ma
-
-upper_band, lower_band,middle_band = bollinger_band(close,20,2)
-print(middle_band)
-print(upper_band)
-print(lower_band)
 
 #Bollinger Band Ends here
