@@ -3,7 +3,7 @@ import pandas_datareader.data as web
 from datetime import datetime
 from pandas.util.testing import assert_frame_equal
 from matplotlib.dates import date2num
-import Indicator
+from Backtest import Indicator
 import statistics
 
 # Name of top 500 stocks of NSE
@@ -95,6 +95,7 @@ data = web.DataReader(f'{stock_name}.NS', 'yahoo', start, end)
 data_reset = data.reset_index()
 # This line is compulsory to make Date  column readable to python programme
 data_reset['date_ax'] = data_reset['Date'].apply(lambda date: date2num(date))
+
 # putting every column in an individual list
 close = data_reset['Close'].to_list()
 high = data_reset['High'].to_list()
@@ -153,7 +154,7 @@ bb_arr = []
 
 for i in range(len(indicator_entry)):
     if indicator_entry[i] == "rsi":
-        val = Indicator.RSI(close , 14)
+        val = Indicator.RSI(close,14)  # aiyan t
         if parameter_entry[i] == "Crossover":
             for j in range(len(val)):
                 if val[j - 1] <= value_entry[i] < val[j] != 0 and val[j - 1] != 0:
@@ -278,7 +279,7 @@ bbe_arr = []
 # Exit data code
 for i in range(len(indicator_exit)):
     if indicator_exit[i] == "rsi":
-        val = Indicator.RSI(close , 14)
+        val = Indicator.RSI(close,14)
         if parameter_exit[i] == "Crossover":
             for j in range(len(val)):
                 if val[j - 1] <= value_exit[i] < val[j] != 0 and val[j - 1] != 0:
@@ -404,7 +405,7 @@ entry_date_points = []
 exit_date_points = []
 entry_close_points = []
 exit_close_points = []
-print(data_reset)
+
 for i in range(len(close)):
     ce = 0
     if data_reset.iloc[i, 8] == "Yes":
@@ -417,9 +418,9 @@ for i in range(len(close)):
                 entry_close_points.append(close[i])
 
     cex = 0
-    if data_reset.iloc[i, 7 + count_entry ] == "Yes":
+    if data_reset.iloc[i, 7 + count_entry + 1] == "Yes":
         for j in range(count_exit):
-            if data_reset.iloc[i, 7 + count_entry  + j] == "Yes":
+            if data_reset.iloc[i, 7 + count_entry + 1 + j] == "Yes":
                 cex += 1
             if cex == count_exit:
                 exit_dt_points.append(dt[i])
@@ -427,15 +428,31 @@ for i in range(len(close)):
                 exit_close_points.append(close[i])
 
 total = []
-
-if len(entry_date_points) == 0 or len(exit_date_points) == 0:
-    print(" No Match for this Strategy")
+ref = 0
+choice = input("Do you want multiple entries for single exit , Enter Yes/No : ")
+if choice == "No":
+    if len(entry_date_points) == 0 or len(exit_date_points) == 0:
+        print(" No Match for this Strategy")
+    else:
+        for i in range(len(entry_date_points)):
+            if entry_close_points[i] > ref:
+                price_entry = entry_close_points[i]
+                for j in range(len(exit_date_points)):
+                    if exit_dt_points[j] > entry_dt_points[i]:
+                        price_exit = exit_close_points[j]
+                        total.append(((price_exit - price_entry) / price_exit) * 100)
+                        ref = price_exit
+                        break
+        print(f'Your Profit/Loss is {statistics.mean(total):.2f} %')
 else:
-    for i in range(len(entry_date_points)):
-        price_entry = entry_close_points[i]
-        for j in range(len(exit_date_points)):
-            if exit_dt_points[j] > entry_dt_points[i]:
-                price_exit = exit_close_points[j]
-                total.append(((price_exit - price_entry) / price_exit) * 100)
-                break
-    print(f'Your Profit/Loss is {statistics.mean(total):.2f} %')
+    if len(entry_date_points) == 0 or len(exit_date_points) == 0:
+        print(" No Match for this Strategy")
+    else:
+        for i in range(len(entry_date_points)):
+            price_entry = entry_close_points[i]
+            for j in range(len(exit_date_points)):
+                if exit_dt_points[j] > entry_dt_points[i]:
+                    price_exit = exit_close_points[j]
+                    total.append(((price_exit - price_entry) / price_exit) * 100)
+                    break
+        print(f'Your Profit/Loss is {statistics.mean(total):.2f} %')

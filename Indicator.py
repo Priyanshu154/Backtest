@@ -13,8 +13,8 @@ nifty_500 = ['3MINDIA.NS','ACC.NS','AIAENG.NS','APLAPOLLO.NS','AUBANK.NS','AARTI
 
 # datetime is a pandas function to access data of that particular date
 # datetime(year , month , day)
-start = datetime(2019,6,7)
-end = datetime(2020,7,20)
+start = datetime(2019,8,6)
+end = datetime(2020,7,16)
 
 # web.DataReader helps to access data of a particular stock from the site you want from starting date to ending date
 # data = web.DataReader('Stock Name', 'Website', starting date, ending date)
