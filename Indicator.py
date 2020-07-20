@@ -393,3 +393,10 @@ def bollinger_band(close,n,r):
     return up,lo,ma
 
 #Bollinger Band Ends here
+def fib_retracement(p1, p2):
+    list =[0, 0.236, 0.382, 0.5, 0.618, 0.786, 1, 1.618, 2.618, 3.618, 4.236]
+    dict = {}
+    dist = p2 - p1
+    for val in list:
+        dict[str(val) ] =  (p2 - dist*val)
+    return dict

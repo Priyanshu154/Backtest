@@ -3,7 +3,7 @@ import pandas_datareader.data as web
 from datetime import datetime
 from pandas.util.testing import assert_frame_equal
 from matplotlib.dates import date2num
-from Backtest import Indicator
+import Indicator
 import statistics
 
 # Name of top 500 stocks of NSE
@@ -95,7 +95,6 @@ data = web.DataReader(f'{stock_name}.NS', 'yahoo', start, end)
 data_reset = data.reset_index()
 # This line is compulsory to make Date  column readable to python programme
 data_reset['date_ax'] = data_reset['Date'].apply(lambda date: date2num(date))
-
 # putting every column in an individual list
 close = data_reset['Close'].to_list()
 high = data_reset['High'].to_list()
@@ -405,7 +404,7 @@ entry_date_points = []
 exit_date_points = []
 entry_close_points = []
 exit_close_points = []
-
+print(data_reset)
 for i in range(len(close)):
     ce = 0
     if data_reset.iloc[i, 8] == "Yes":
@@ -418,9 +417,9 @@ for i in range(len(close)):
                 entry_close_points.append(close[i])
 
     cex = 0
-    if data_reset.iloc[i, 7 + count_entry + 1] == "Yes":
+    if data_reset.iloc[i, 7 + count_entry ] == "Yes":
         for j in range(count_exit):
-            if data_reset.iloc[i, 7 + count_entry + 1 + j] == "Yes":
+            if data_reset.iloc[i, 7 + count_entry  + j] == "Yes":
                 cex += 1
             if cex == count_exit:
                 exit_dt_points.append(dt[i])
