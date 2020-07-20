@@ -14,7 +14,7 @@ nifty_500 = ['3MINDIA.NS','ACC.NS','AIAENG.NS','APLAPOLLO.NS','AUBANK.NS','AARTI
 # datetime is a pandas function to access data of that particular date
 # datetime(year , month , day)
 start = datetime(2019,6,7)
-end = datetime(2020,7,18)
+end = datetime(2020,7,20)
 
 # web.DataReader helps to access data of a particular stock from the site you want from starting date to ending date
 # data = web.DataReader('Stock Name', 'Website', starting date, ending date)
@@ -25,7 +25,6 @@ data = web.DataReader('ACC.NS', 'yahoo', start, end)
 data_reset = data.reset_index()
 # This line is compulsory to make Date  column readable to python programme
 data_reset['date_ax'] = data_reset['Date'].apply(lambda date: date2num(date))
-
 # putting every column in an individual list
 close = data_reset['Close'].to_list()
 high = data_reset['High'].to_list()
@@ -33,6 +32,7 @@ low = data_reset['Low'].to_list()
 openn = data_reset['Open'].to_list()
 date = data_reset['Date'].to_list()
 dt = data_reset['date_ax'].to_list()
+volume = data_reset['Volume'].to_list()
 def RSI(close, t):
     n = len(close)
     rsi = []
@@ -393,6 +393,8 @@ def bollinger_band(close,n,r):
     return up,lo,ma
 
 #Bollinger Band Ends here
+
+#Fibonacci Retracement start here
 def fib_retracement(p1, p2):
     list =[0, 0.236, 0.382, 0.5, 0.618, 0.786, 1, 1.618, 2.618, 3.618, 4.236]
     dict = {}
@@ -400,3 +402,39 @@ def fib_retracement(p1, p2):
     for val in list:
         dict[str(val) ] =  (p2 - dist*val)
     return dict
+#Fibonacci Retracement ends here
+
+#Money Flow Index starts here
+def MFI(t):
+    mfi = []        #money flow index
+    typ = []        #typical price
+    raw_money = []  #raw money flow
+    mfr = []        #money flow ratio
+    for i in range(t):
+        mfi.append(0)
+        mfr.append(0)
+    ind = 1
+    typ.append( (high[0] + low[0] + close[0]) / 3)
+    raw_money.append(typ[0]*volume[0])  #first time assume it is positive
+
+    for i in range(1,len(close)):
+        typ.append( (high[i] + low[i] + close[i])/3 )
+        if(typ[ind] > typ[ind-1]):
+            raw_money.append( typ[i]*volume[i]  )
+        else:
+            raw_money.append( -typ[i]*volume[i]  )
+        ind = ind + 1
+    for i in range(t, len(close)):
+        positive_flows = 0.0
+        negative_flows = 0.0
+        for j in range(t):
+            if(raw_money[i-j] > 0):
+                positive_flows += raw_money[i-j]
+            else:
+                negative_flows += -raw_money[i-j]
+        if(negative_flows != 0):        ratio = positive_flows/negative_flows
+        else:                           ratio = positive_flows
+        mfr.append( ratio )
+        mfi.append( (100- (100/(1+ratio)) ) )
+    return mfi
+#Money Flow Index ends here
