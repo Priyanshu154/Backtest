@@ -72,7 +72,21 @@ def RSI(close, t):
         rsi.append( (100 - (100/(1+rs))) )   #RSI for a particular date
     return rsi
 #RSI Ends Here
+#SMA starts here
 
+def SMA(close, t):
+    mas = []
+    for i in range(t - 1):
+        mas.append(0)
+    for i in range(len(close) - t + 1):
+        sum = 0
+        for j in range(i, t + i):
+            sum = sum + close[j]
+        meann = sum / t
+        mas.append(meann)
+    return mas
+
+    #SMA Ends here
 def EMA(close, t):
     sma= 0.0
     n = len(close)
@@ -299,8 +313,8 @@ def pivot_points():
             resistance_1_pr.append((2*pivot_point_pr[i])-final_low[i])
             support_2_pr.append(pivot_point_pr[i] - final_high[i] + final_low[i])
             resistance_2_pr.append(pivot_point_pr[i] + final_high[i] - final_low[i])
-            support_3_pr.append(pivot_point_pr[i] - 2*final_high[i] + 2*final_low[i])
-            resistance_3_pr.append(pivot_point_pr[i] + 2*final_high[i] - 2*final_low[i])
+            support_3_pr.append(support_1_pr[i] - final_high[i] + final_low[i])
+            resistance_3_pr.append(resistance_1_pr[i] + final_high[i] - final_low[i])
     for i in range(final_counts[0]):
         pivot_point.append(0)
         resistance_1.append(0)
@@ -376,7 +390,7 @@ def bollinger_band(close,n,r):
         up.append(0)
         lo.append(0)
         ma.append(0)
-    for i in range(len(close)-19):
+    for i in range(len(close)-n+1):
         sum = 0
         sqr = 0
         for j in range(i, n+i):
