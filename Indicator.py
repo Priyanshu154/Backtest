@@ -39,7 +39,7 @@ def RSI(close, t):
     Ups = 0.0
     Downs = 0.0
     for j in range(t-1):
-        rsi.append(0)
+        rsi.append(-1)
     #Ye sabse pehla avgU/avgD find karne ke liye simple average vala step
     for i in range(1,t):
         diff = close[i] - close[i-1]
@@ -452,3 +452,119 @@ def MFI(t):
         mfi.append( (100- (100/(1+ratio)) ) )
     return mfi
 #Money Flow Index ends here
+
+
+
+# Stochastic Rsi Starts ahi thi
+
+
+def Rsi_high(high, t):
+
+   rsi_H = []
+   for i in range(0,t-1):
+        rsi_H.append(-1)
+
+
+   i = 0
+   for j in range(t, len(high)+1):
+        HIGH = high[i:t]
+        rsi_H.append(max(HIGH))
+        t += 1
+        i += 1
+
+   return rsi_H
+
+
+
+def Rsi_low(low, t):
+
+   rsi_L = []
+   for i in range(0,t-1):
+        rsi_L.append(-1)
+
+   i = 0
+
+   for j in range(t, len(low) + 1):
+        if low!=-1:
+            LOW = low[i:t]
+            rsi_L.append(min(LOW))
+            t += 1
+            i += 1
+
+   return rsi_L
+
+def stoch(source, high, low, t,rt):
+    rsi_high = []
+    rsi_low = []
+
+    rsi_low = Rsi_low(high, t)
+    rsi_high = Rsi_high(low, t)
+
+    count=0
+    for x in rsi_low:
+        if(x==-1):
+            count+=1
+
+    Stochastic=[]
+    for i in range(0,count):
+        Stochastic.append(-1)
+
+    cnt=0
+    rsi=RSI(close,rt)
+    for i in range(count,(len(source))):
+        y=(rsi[i]-rsi_low[i])
+        z=(rsi_high[i]-rsi_low[i])
+        w=y/z
+        Stochastic.append(w*100)
+        cnt+=1
+
+
+    return Stochastic,count
+
+def sma(rsi,t,count):
+    x=[]
+    cnt=0
+    for i in range(0,count):
+        x.append(-1)
+        cnt+=1
+    for i in range(t-1):
+        x.append(-1)
+        cnt += 1
+
+    cnt+=1
+    cnt1=cnt
+
+    for i in range(cnt,len(rsi)+1):
+        temp=rsi[cnt1-t:cnt1]
+        sum=0.0000
+        for j in temp:
+            sum=sum+j
+
+        sum=sum/t
+        cnt1+=1
+        del temp
+        x.append(sum)
+
+
+    return x
+
+
+def S_RSI(Close, t, K, D, rt):
+    # rt=rsi peroid
+    # t=Stochastic Rsi Period
+    # K=main line
+    # D= moving average of K
+
+    rsi =RSI(Close, rt)
+    Stochstic,count=stoch(rsi, rsi, rsi,t,rt)
+    k = sma(Stochstic,K,count)
+    d = sma(k,D,count)
+
+    return k,d
+
+    #k= blue line on trading view
+    #d= orange line on trading view
+
+# Stochastic Rsi Ends Here
+
+
