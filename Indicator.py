@@ -14,7 +14,7 @@ nifty_500 = ['3MINDIA.NS','ACC.NS','AIAENG.NS','APLAPOLLO.NS','AUBANK.NS','AARTI
 # datetime is a pandas function to access data of that particular date
 # datetime(year , month , day)
 start = datetime(2019,8,6)
-end = datetime(2020,7,16)
+end = datetime(2020,10,16)
 
 # web.DataReader helps to access data of a particular stock from the site you want from starting date to ending date
 # data = web.DataReader('Stock Name', 'Website', starting date, ending date)
@@ -77,7 +77,7 @@ def RSI(close, t):
 def SMA(close, t):
     mas = []
     for i in range(t - 1):
-        mas.append(0)
+        mas.append(-1)
     for i in range(len(close) - t + 1):
         sum = 0
         for j in range(i, t + i):
@@ -95,15 +95,14 @@ def EMA(close, t):
     sma = sma/(t)
     ema = []
     for j in range(t-1):
-        ema.append(0)
+        ema.append(-1)
     ema.append(sma)
     m = 2/(t+1)
     for i in range(t,n):
-        e = close[i]*m + ema[i-t]*(1-m)
+        e = close[i]*m + ema[i-1]*(1-m)
         ema.append(e)
     return ema
 #EMA ends here
-
 # From Here Pivot Points
 final_high = []
 final_low = []
@@ -425,8 +424,8 @@ def MFI(t):
     raw_money = []  #raw money flow
     mfr = []        #money flow ratio
     for i in range(t):
-        mfi.append(0)
-        mfr.append(0)
+        mfi.append(-1)
+        mfr.append(-1)
     ind = 1
     typ.append( (high[0] + low[0] + close[0]) / 3)
     raw_money.append(typ[0]*volume[0])  #first time assume it is positive
@@ -566,5 +565,3 @@ def S_RSI(Close, t, K, D, rt):
     #d= orange line on trading view
 
 # Stochastic Rsi Ends Here
-
-
