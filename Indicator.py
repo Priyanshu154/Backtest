@@ -630,9 +630,6 @@ def lag(close,time):
     for i in close:
         lag1.append(i)
 
-    for i in range(0,time):
-        lag1.append(-1)
-
     return lag1
 
 def Icloud(c_period,b_period,span_b_period,lag_span_period):
@@ -656,10 +653,6 @@ def Icloud(c_period,b_period,span_b_period,lag_span_period):
     span_b= average(span_b_high,span_b_low)
 
     lag_span=lag(close,lag_span_period)
-
-    print(close)
-    print(lag_span)
-    print(len(lag_span))
 
     return conversion_line,base_line,span_a,span_b,lag_span
     #the last array of all values is matching with last value on trading view.
