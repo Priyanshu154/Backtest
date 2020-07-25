@@ -565,3 +565,103 @@ def S_RSI(Close, t, K, D, rt):
     #d= orange line on trading view
 
 # Stochastic Rsi Ends Here
+
+#Ichimoku Cloud Starts ahi thi
+
+def IC_high(high,t):
+
+    ic_high = []
+    for i in range(0,t-1):
+        ic_high.append(-1)
+
+    i = 0
+    for j in range(t, len(high)+1):
+        HIGH = high[i:t]
+        ic_high.append(max(HIGH))
+        t += 1
+        i += 1
+
+    return ic_high
+
+def IC_low(low,t):
+
+    ic_low = []
+    for i in range(0,t-1):
+        ic_low.append(-1)
+
+    i = 0
+    for j in range(t, len(high)+1):
+        LOW= low[i:t]
+        ic_low.append(min(LOW))
+        t += 1
+        i += 1
+
+    return ic_low
+
+def average(ic_high,ic_low,):
+    cnt=0
+    cnt1=0
+    cnt2=0
+    avg=[]
+    for i in ic_high:
+        if i == -1:
+            cnt1=cnt1+1
+
+    for i in ic_low:
+        if i == -1:
+            cnt2=cnt2+1
+
+    if cnt2>cnt1:
+        cnt=cnt2
+    else:
+        cnt=cnt1
+
+    for i in range(0,cnt):
+        avg.append(-1)
+
+    for i in range (cnt,len(high)):
+        avg.append((ic_high[i]+ic_low[i])/2)
+
+    return avg
+
+def lag(close,time):
+    lag1=[]
+
+    for i in close:
+        lag1.append(i)
+
+    for i in range(0,time):
+        lag1.append(-1)
+
+    return lag1
+
+def Icloud(c_period,b_period,span_b_period,lag_span_period):
+
+    #c_line is conversion line also known as Tenken-san
+    #b_line is base line also known as kijun-san
+    #other all are time peroids
+
+    c_high=IC_high(high,c_period)
+    c_low=IC_low(low,c_period)
+    conversion_line=average(c_high,c_low)
+
+    b_high=IC_high(high,b_period)
+    b_low=IC_low(low,b_period)
+    base_line=average(b_high,b_low)
+
+    span_a=average(conversion_line,base_line)
+
+    span_b_high = IC_high(high,span_b_period)
+    span_b_low = IC_low(low,span_b_period)
+    span_b= average(span_b_high,span_b_low)
+
+    lag_span=lag(close,lag_span_period)
+
+    print(close)
+    print(lag_span)
+    print(len(lag_span))
+
+    return conversion_line,base_line,span_a,span_b,lag_span
+    #the last array of all values is matching with last value on trading view.
+
+#Ichimoku Cloud Ends Here
