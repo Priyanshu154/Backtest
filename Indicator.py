@@ -659,3 +659,55 @@ def Icloud(c_period,b_period,span_b_period,lag_span_period):
     #the last array of all values is matching with last value on trading view.
 
 #Ichimoku Cloud Ends Here
+
+#ATR Starts Ahi Thi
+
+def tr():
+    X=[]
+    Y=[-1]
+    Z=[-1]
+    TR=[-1]
+    for i in range(len(low)):
+        X.append(high[i]-low[i])
+
+    for i in range(1,len(high)):
+        Y.append(abs(high[i]-close[i-1]))
+
+    for i in range(1,len(low)):
+        Z.append(abs(low[i]-close[i-1]))
+
+    for i in range(1,len(low)):
+        TR.append(max(X[i],Y[i],Z[i]))
+
+    return TR
+
+def ATR(source,t):
+#Source Might be EITHER EMA,RMA,SMA OR WMA.
+#At the moment WMA & RMA isn't added so it will return None
+#T Is Time Period
+#take source as a string
+
+    TR=tr()
+
+    source=source.upper()
+
+    if source=="EMA":
+        ema=EMA(TR,t)
+    elif source == "RMA":
+        pass
+    elif source == "WMA":
+        pass
+    else:
+        sma=SMA(TR,t)
+
+    #for returning
+    if source=="EMA":
+        return ema
+    elif source == "RMA":
+        pass
+    elif source == "WMA":
+        pass
+    else:
+        return sma
+
+#ATR Ends Here
