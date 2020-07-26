@@ -87,6 +87,7 @@ def SMA(close, t):
     return mas
 
     #SMA Ends here
+#EMA Starts Here
 def EMA(close, t):
     sma= 0.0
     n = len(close)
