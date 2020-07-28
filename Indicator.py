@@ -711,3 +711,31 @@ def ATR(source,t):
         return sma
 
 #ATR Ends Here
+
+#William %R Starts Ahi Thi
+
+def WILLIAM_R(source,t):
+
+    W_R=[]
+
+    for i in range(0,t-1):
+        W_R.append(-1)
+
+    # hh is highest high
+    #ll is lowest low
+    hh=Rsi_high(high,t)
+    ll=Rsi_low(low,t)
+
+    for i in range(t-1,len(source)):
+        x=source[i]-hh[i]
+        y=hh[i]-ll[i]
+        z=x/y
+        z=z*(100)
+        W_R.append(z)
+
+
+    return W_R
+
+
+#William %R Ends Here
+
