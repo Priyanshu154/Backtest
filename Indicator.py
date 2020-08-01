@@ -725,9 +725,9 @@ def ATR(source,t):
     if source=="EMA":
         ema=EMA(TR,t)
     elif source == "RMA":
-        pass
+        rma=RMA(TR,t)
     elif source == "WMA":
-        pass
+        wma=WMA(TR,t)
     else:
         sma=SMA(TR,t)
 
@@ -735,9 +735,9 @@ def ATR(source,t):
     if source=="EMA":
         return ema
     elif source == "RMA":
-        pass
+        return rma
     elif source == "WMA":
-        pass
+        return wma
     else:
         return sma
 
