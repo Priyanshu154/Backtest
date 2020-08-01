@@ -117,6 +117,17 @@ def RMA(close, t):
     return rma
 # RMA Ends here
 
+# Rate Of Change(ROC) Starts here
+def ROC(close, t):
+    roc = []
+    for i in range(t-1):
+        roc.append(-1)
+    for i in range(t-1, len(close)):
+        sum = 100*(close[i]-close[i-t])/close[i-t]
+        roc.append(sum)
+    return roc
+# ROC Ends here
+
 #EMA Starts Here
 def EMA(close, t):
     sma= 0.0
