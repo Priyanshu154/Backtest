@@ -93,15 +93,15 @@ def SMA(close, t):
 # Reference for code is taken from tradingview
 def WMA(close, t):
     wma = []
-    for i in range(t - 1):
+    for i in range(t-1):
         wma.append(-1)
-    for i in range(t-1, len(close)):
+    for i in range(len(close) - t + 1):
         norm = 0.0
         summ = 0.0
-        for j in range(0, t):
-            weight = (t-j)*t
+        for j in range(i, i+t):
+            weight = (i+t-j)*t
             norm = norm + weight
-            summ = summ + (close[i-j]*weight)
+            summ = summ + close[j]*weight
         wma.append(summ/norm)
     return wma
 # WMA Ends Here
