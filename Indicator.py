@@ -106,6 +106,17 @@ def WMA(close, t):
     return wma
 # WMA Ends Here
 
+# Rolling Moving Average(RMA) Starts here
+def RMA(close, t):
+    rma = []
+    sma = SMA(close, t)
+    for i in range(t):
+        rma.append(sma[i])
+    for i in range(t, len(close)):
+        rma.append( (rma[i-1]*(t-1) + close[i])/t )
+    return rma
+# RMA Ends here
+
 #EMA Starts Here
 def EMA(close, t):
     sma= 0.0
