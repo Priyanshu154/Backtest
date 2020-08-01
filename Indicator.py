@@ -33,6 +33,8 @@ openn = data_reset['Open'].to_list()
 date = data_reset['Date'].to_list()
 dt = data_reset['date_ax'].to_list()
 volume = data_reset['Volume'].to_list()
+
+# RSI starts
 def RSI(close, t):
     n = len(close)
     rsi = []
@@ -72,21 +74,38 @@ def RSI(close, t):
         rsi.append( (100 - (100/(1+rs))) )   #RSI for a particular date
     return rsi
 #RSI Ends Here
-#SMA starts here
 
+#SMA starts here
 def SMA(close, t):
     mas = []
     for i in range(t - 1):
         mas.append(-1)
     for i in range(len(close) - t + 1):
-        sum = 0
+        summ = 0
         for j in range(i, t + i):
-            sum = sum + close[j]
-        meann = sum / t
+            summ = summ + close[j]
+        meann = summ / t
         mas.append(meann)
     return mas
+#SMA Ends here
 
-    #SMA Ends here
+# Weighted Moving Average(WMA) Starts Here
+# Reference for code is taken from tradingview
+def WMA(close, t):
+    wma = []
+    for i in range(t-1):
+        wma.append(-1)
+    for i in range(len(close) - t + 1):
+        norm = 0.0
+        summ = 0.0
+        for j in range(i, i+t):
+            weight = (i+t-j)*t
+            norm = norm + weight
+            summ = summ + close[j]*weight
+        wma.append(summ/norm)
+    return wma
+# WMA Ends Here
+
 #EMA Starts Here
 def EMA(close, t):
     sma= 0.0
@@ -104,6 +123,7 @@ def EMA(close, t):
         ema.append(e)
     return ema
 #EMA ends here
+
 # From Here Pivot Points
 final_high = []
 final_low = []
