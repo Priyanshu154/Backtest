@@ -781,3 +781,55 @@ def WILLIAM_R(source,t):
 
 #William %R Ends Here
 
+#Super Trend Starts Ahi Thi
+#tx3 uses rma in atr & super trend uses atr so if you want to check use rma in atr in tx3
+def ST(s_atr,t_atr,mul):
+    #s_atr Is Source for ATR & t_atr is Time Period For ATR
+    #mul is multiplier
+    up=[]
+    down=[]
+    f_down=[]
+    f_up=[]
+    st=[]
+    cnt=0
+    atr=ATR(s_atr,t_atr)
+    for i in range(0,t_atr-1):
+        up.append(-1)
+        f_up.append(-1)
+        down.append(-1)
+        f_down.append(-1)
+        st.append(-1)
+        cnt+=1
+    for i in range(cnt,len(high)):
+       x=high[i]
+       y=low[i]
+       z=(x+y)/2
+       w=atr[i]*mul
+       up.append(z+w)
+       down.append(z-w)
+    for i in range(cnt,len(close)):
+
+        if (i!=len(close)):
+            if ( (up[i] < f_up[i-1]) or (close[i-1] > f_up[i-1])):
+                f_up.append(up[i])
+            else:
+                f_up.append(f_up[i-1])
+
+            if ( (down[i]>f_down[i-1]) or (close[i-1]<f_down[i-1])):
+                f_down.append(down[i])
+            else:
+                f_down.append(f_down[i-1])
+
+    for i in range(cnt,len(high)):
+
+        if ((st[i-1]==f_up[i-1]) and (close[i]<f_up[i])):
+            st.append(f_up[i])
+        elif((st[i-1]==f_up[i-1]) and (close[i]>f_up[i])):
+            st.append(f_down[i])
+        elif((st[i-1]==f_down[i-1]) and (close[i]>f_down[i])):
+            st.append(f_down[i])
+        elif((st[i-1]==f_down[i-1]) and (close[i]<f_down[i])):
+            st.append(f_up[i])
+
+    return st
+#Super Trend Ends Here():
