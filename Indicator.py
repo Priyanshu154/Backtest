@@ -14,12 +14,12 @@ nifty_500 = ['3MINDIA.NS','ACC.NS','AIAENG.NS','APLAPOLLO.NS','AUBANK.NS','AARTI
 # datetime is a pandas function to access data of that particular date
 # datetime(year , month , day)
 start = datetime(2019,8,6)
-end = datetime(2020,10,16)
+end = datetime(2020,8,3)
 
 # web.DataReader helps to access data of a particular stock from the site you want from starting date to ending date
 # data = web.DataReader('Stock Name', 'Website', starting date, ending date)
 # to see how values are stored in data please print to verify
-data = web.DataReader('ACC.NS', 'yahoo', start, end)
+data = web.DataReader('RELIANCE.NS', 'yahoo', start, end)
 
 # data.reset_index() will shift the Date from Header column to normal column you can print to check
 data_reset = data.reset_index()
@@ -379,28 +379,44 @@ def pivot_points():
 #Pivot Points Ends Here
 
 #MACD Starts From Here
-def EMA_MACD(t, macd):
-    sma= 0.0
-    n = len(macd)
+def EMA_d(close, t):
+    sma = 0.0
+    n = len(close)
     for i in range(t):
-        sma += macd[i]
-    sma = sma/(t)
+        sma += close[i]
+    sma = sma / (t)
     ema = []
     ema.append(sma)
-    m = 2/(t+1)
-    for i in range(t,n):
-        e = macd[i]*m + ema[i-t]*(1-m)
+    m = 2 / (t + 1)
+    for i in range(t, n):
+        e = close[i] * m + ema[i - t] * (1 - m)
         ema.append(e)
     return ema
 
-def MACD(x,y,z):
-    val_pr = EMA(close, x)
-    val2_pr = EMA(close, y)
+
+def EMA_MACD(t, macd):
+    sma = 0.0
+    n = len(macd)
+    for i in range(t):
+        sma += macd[i]
+    sma = sma / (t)
+    ema = []
+    ema.append(sma)
+    m = 2 / (t + 1)
+    for i in range(t, n):
+        e = macd[i] * m + ema[i - t] * (1 - m)
+        ema.append(e)
+    return ema
+
+
+def MACD(x, y, z):
+    val_pr = EMA_d(close, x)
+    val2_pr = EMA_d(close, y)
     val = []
     val2 = []
-    for i in range(x):
+    for i in range(x - 1):
         val.append(0)
-    for i in range(y):
+    for i in range(y - 1):
         val2.append(0)
 
     for i in range(len(val_pr)):
@@ -411,16 +427,24 @@ def MACD(x,y,z):
     macd_line = []
     macd_histogram = []
     signal_line = []
+
     for i in range(len(val)):
-        macd_line.append(val[i]-val2[i])
-    for i in range(z-1):
+        macd_line.append(val[i] - val2[i])
+
+    for i in range(z - 1):
         signal_line.append(0)
-    signal_line_pr = EMA_MACD(z,macd_line)
+
+    signal_line_pr = EMA_MACD(z, macd_line)
+
     for i in range(len(signal_line_pr)):
         signal_line.append(signal_line_pr[i])
+
     for i in range(len(val)):
         macd_histogram.append(macd_line[i] - signal_line[i])
-    return macd_line,signal_line,macd_histogram
+
+    return macd_line, signal_line, macd_histogram
+
+macd_line, signal_line, macd_histogram = MACD(12, 26, 9)
 #MACD Ends Here
 
 #Bollinger Band Starts Here
@@ -833,3 +857,5 @@ def ST(s_atr,t_atr,mul):
 
     return st
 #Super Trend Ends Here():
+wil = round(WILLIAM_R(close, 14)[len(WILLIAM_R(close, 14)) - 1], 2)
+print(wil)
