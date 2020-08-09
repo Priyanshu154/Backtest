@@ -938,3 +938,6 @@ def ADX(adx_t,di_t):
 
     return adx
 #ADX Ends Here
+
+
+#hereby We Complete Our Indicators
