@@ -859,3 +859,82 @@ def ST(s_atr,t_atr,mul):
 #Super Trend Ends Here():
 wil = round(WILLIAM_R(close, 14)[len(WILLIAM_R(close, 14)) - 1], 2)
 print(wil)
+
+#ADX Starts Ahi Thi
+def changeh(high):
+    h=[-1]
+    for i in range(1,len(high)):
+        h.append(high[i]-high[i-1])
+
+    return h
+
+def changel(low):
+    l=[-1]
+    for i in range(1,len(low)):
+        l.append(low[i-1]-low[i])
+
+    return l
+
+def ADX(adx_t,di_t):
+
+    plus_di=[-1]
+    minus_di=[-1]
+    s_plus=[]
+    s_minus=[]
+    plus=[]
+    minus=[]
+    sum=[]
+    dx=[]
+    adx=[]
+
+    h=changeh(high)
+    l=changel(low)
+    atr=ATR("rma",di_t)
+
+    for i in range(1,len(close)):
+        if( (h[i]>l[i]) and (h[i]>0) ):
+            plus_di.append(h[i])
+        else:
+            plus_di.append(0)
+
+    for i in range(1,len(close)):
+        if( (l[i]>h[i]) and (l[i]>0) ):
+            minus_di.append(l[i])
+        else:
+            minus_di.append(0)
+
+
+    s_plus=RMA(plus_di,di_t)
+    s_minus=RMA(minus_di,di_t)
+
+    for i in range(0,di_t):
+        plus.append(-1)
+        minus.append(-1)
+
+    for i in range(di_t,len(s_plus)):
+        x=100*s_plus[i]
+        x=x/atr[i]
+        plus.append(x)
+
+    for i in range(di_t,len(s_minus)):
+        x=100*s_minus[i]
+        x=x/atr[i]
+        minus.append(x)
+
+    for i in range(0,di_t):
+        sum.append(-1)
+        dx.append(-1)
+
+    for i in range(di_t,len(plus)):
+        sum.append(plus[i]+minus[i])
+
+    for i in range(di_t,len(sum)):
+        y=abs(plus[i]-minus[i])
+        y=y/sum[i]
+        y=y*100
+        dx.append(y)
+
+    adx=RMA(dx,adx_t)
+
+    return adx
+#ADX Ends Here
