@@ -857,8 +857,7 @@ def ST(s_atr,t_atr,mul,high,low):
 
     return st
 #Super Trend Ends Here():
-wil = round(WILLIAM_R(close, 14)[len(WILLIAM_R(close, 14)) - 1], 2)
-print(wil)
+
 
 #ADX Starts Ahi Thi
 def changeh(high):
