@@ -615,13 +615,13 @@ def sma(rsi,t,count):
     return x
 
 
-def S_RSI(Close, t, K, D, rt):
+def S_RSI(close, t, K, D, rt):
     # rt=rsi peroid
     # t=Stochastic Rsi Period
     # K=main line
     # D= moving average of K
 
-    rsi =RSI(Close, rt)
+    rsi =RSI(close, rt)
     Stochstic,count=stoch(rsi, rsi, rsi,t,rt)
     k = sma(Stochstic,K,count)
     d = sma(k,D,count)
@@ -699,7 +699,7 @@ def lag(close,time):
 
     return lag1
 
-def Icloud(c_period,b_period,span_b_period,lag_span_period):
+def Icloud(c_period,b_period,span_b_period,lag_span_period,close,high,low):
 
     #c_line is conversion line also known as Tenken-san
     #b_line is base line also known as kijun-san
@@ -747,7 +747,7 @@ def tr():
 
     return TR
 
-def ATR(source,t):
+def ATR(source,t,high,low,close):
 #Source Might be EITHER EMA,RMA,SMA OR WMA.
 #At the moment WMA & RMA isn't added so it will return None
 #T Is Time Period
@@ -780,7 +780,7 @@ def ATR(source,t):
 
 #William %R Starts Ahi Thi
 
-def WILLIAM_R(source,t):
+def WILLIAM_R(source,t,high,low):
 
     W_R=[]
 
@@ -807,7 +807,7 @@ def WILLIAM_R(source,t):
 
 #Super Trend Starts Ahi Thi
 #tx3 uses rma in atr & super trend uses atr so if you want to check use rma in atr in tx3
-def ST(s_atr,t_atr,mul):
+def ST(s_atr,t_atr,mul,high,low):
     #s_atr Is Source for ATR & t_atr is Time Period For ATR
     #mul is multiplier
     up=[]
@@ -875,7 +875,7 @@ def changel(low):
 
     return l
 
-def ADX(adx_t,di_t):
+def ADX(adx_t,di_t,high,low):
 
     plus_di=[-1]
     minus_di=[-1]
