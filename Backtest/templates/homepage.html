@@ -8,6 +8,13 @@
     <br />
     <br />
     <br />
+
+    {% if user.is_authenticated %}
+   Hi {{ request.user.username }} Welcome To Free Backtesting
+    {% endif %}
+    <br />
+    <br />
+    <br />
     <form action = "{% url 'result' %}">
 
     <label for = "Stock">Choose a Stock:</label>
@@ -52,5 +59,11 @@
    <br />
     <input type="submit" value="submit"></input>
  </form>
+ {% if user.is_authenticated %}
+ <form method ='POST' action = "{% url 'logout' %}" id='logout'>
+   {% csrf_token %}
+ <a href="javascript:document.getElementById('logout').submit();">Logout</a>
+ {% endif %}
+</form>
   </body>
 </html>
