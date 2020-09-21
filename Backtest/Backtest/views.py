@@ -34,10 +34,5 @@ def result(request):
     print(exit)
     print(para)
     print(value)
-    '''
-    entry2=request.GET["entry_indicator2"]
-    exit1=request.GET["exit_indicator1"]
-    exit2=request.GET["exit_indicator2"]
-    '''
+
     return render(request, "homepage.html")
-#    return render(request,'result.html',{'stock':stock,'entry1':entry1,'entry2':entry2,'exit1':exit1,'exit2':exit2,})
