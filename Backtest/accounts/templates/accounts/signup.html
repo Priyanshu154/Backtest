@@ -1,14 +1,103 @@
-signup !
-<br/><br/>
-{% if error %}
-<h2>{{ error }}</h2>
-{% endif %}
-<form method="POST" action="{% url 'signup' %}">
-  {% csrf_token %}
-  Username:<input type="text" name = 'username'/><br/><br/>
-  Password:<input type="password" name = 'pass1'/><br/><br/>
-  Confirm Password:<input type="password" name = 'pass2'/><br/><br/>
-  <button type="submit" name="button">Create Account</button>
-  </form>
+<html>
 
-  Already A User ? <a href="{% url 'login' %}">Click Here To Continue</a>
+<head>
+	<title>Sign Up</title>
+	
+	<!-- Fontawesome CDN -->
+	<script src="https://kit.fontawesome.com/0c287f6377.js" crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	
+	<style>
+		.BODY{
+			text-align: center;
+			font-weight: bold;
+			background-color: #282828;
+			color: #ffffff;
+			letter-spacing: 2px;
+		}
+
+		.title{
+			font-size: 48px;
+			padding-top: 25px;
+			padding-bottom: 35px;
+			font-weight: bold;
+			color: #aef682;
+		}
+
+		.alert{
+			letter-spacing: 1px;
+			margin: -25 400 50 400px;
+		}
+
+		input{
+			width: 325px;
+			height: 5%;
+			font-size: 18px;
+			color: #000000;
+			padding-left: 10px;
+		}
+
+		p{
+			margin-left: -90px;
+			margin-top: 30px;
+			font-size: 20px;
+			letter-spacing: 1px;
+		}
+
+		.USER{
+			margin-left: -190px;
+		}
+
+		.END{
+			font-size: 18px;
+			letter-spacing: 0px;
+			margin: 25 0 0 0px;
+		}
+
+		.btn-primary{
+			background-color: #1c6288;
+			font-size: 19px;
+			border-radius: 5px;
+			padding: 7px 14px;
+			border: 1px solid #daf1ff;
+			margin-top: 30px;
+		}
+	</style>
+</head>
+
+<body class="BODY">
+	<h1 class="title">SIGN UP !</h1>
+	<br/><br/>
+
+	{% if error %}
+	<h3 class="alert alert-danger">{{ error }}</h2>
+	{% endif %}
+
+	<form method="POST" action="{% url 'signup' %}">
+		{% csrf_token %}
+		<p class="USER">USERNAME:</p>
+		<input type="text" name = 'username'/>
+
+		<p class="USER">PASSWORD:</p>
+		<input type="password" name = 'pass1'/>
+
+		<p >CONFIRM PASSWORD:</p>
+		<input type="password" name = 'pass2'/>
+		<br/>
+
+		<button type="submit" name="button" class="btn-primary">Create Account</button>
+	</form>
+
+	<p class="END">Already A User ? <a href="{% url 'login' %}">Click Here To Continue</a> </p>
+  
+</body>
+
+</html>
