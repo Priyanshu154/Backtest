@@ -1,9 +1,10 @@
 import pandas as pd
 import pandas_datareader.data as web
 from datetime import datetime
-from pandas.util.testing import assert_frame_equal
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 from matplotlib.dates import date2num
-from Backtest import Indicator
+import Indicator
 import statistics
 
 # Name of top 500 stocks of NSE
@@ -435,13 +436,13 @@ if choice == "No":
         print(" No Match for this Strategy")
     else:
         for i in range(len(entry_date_points)):
-            if entry_close_points[i] > ref:
+            if entry_dt_points[i] > ref:
                 price_entry = entry_close_points[i]
                 for j in range(len(exit_date_points)):
                     if exit_dt_points[j] > entry_dt_points[i]:
                         price_exit = exit_close_points[j]
                         total.append(((price_exit - price_entry) / price_exit) * 100)
-                        ref = price_exit
+                        ref = exit_dt_points[j]
                         break
         print(f'Your Profit/Loss is {statistics.mean(total):.2f} %')
 else:
