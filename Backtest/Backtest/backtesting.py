@@ -1,9 +1,10 @@
 import pandas as pd
 import pandas_datareader.data as web
 from datetime import datetime
-from pandas.util.testing import assert_frame_equal
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
 from matplotlib.dates import date2num
-from . import Indicator
+import Indicator
 import statistics
 
 # Name of top 500 stocks of NSE
