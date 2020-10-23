@@ -44,7 +44,7 @@
 		color: #ffffff;
 		letter-spacing: 2px;
             	font-size: 18px;
-            	margin-left: 150px;
+            	margin-left: 13.5%;
 	}
 
         input{
@@ -73,7 +73,7 @@
 		color: #faf9ae;		
 		letter-spacing: 2px;
             	text-align: center;
-            	margin-left: -150px;
+            	margin-left: -13.5%;
 	}
 
         .LABEL {
@@ -105,7 +105,7 @@
             font-size: 24px;
             font-weight: bold;
             width: 150px;
-            margin-left: -150px;
+            margin-left: -13.5%;
             margin-right: 0px;
             padding: 0 0 0 0px;
             height: 40px;;
@@ -506,7 +506,7 @@
     {% if user.is_authenticated %}
     <form method ='POST' action = "{% url 'logout' %}" id='logout'>
         {% csrf_token %}
-            <center style="margin-left:-150px;margin-top: 20px;"><a href="javascript:document.getElementById('logout').submit();" class="LABEL">Logout</a></center>
+            <center style="margin-left:-13.5%;margin-top: 20px;"><a href="javascript:document.getElementById('logout').submit();" class="LABEL">Logout</a></center>
         {% endif %}
     </form>
 
