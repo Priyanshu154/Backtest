@@ -50,7 +50,7 @@ def result(request):
     else:
         dict = {
             "profit":profit,
-            "entry": entry,
-            "exit": exit
+         #   "entry": entry,
+          #  "exit": exit
         }
     return render(request, "result.html", dict)

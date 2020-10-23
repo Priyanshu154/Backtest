@@ -6,35 +6,35 @@
 <body>
     <p>{{profit}}</p>
     {% if profit != "No match for this strategy" %}
-        <table>
-      <thead>
-        <tr>
-          <th scope="col">Entry Points</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for e in entry  %}
-            <tr>
-                  <td>{{ e }}</td>
-            </tr>
-      {% endfor %}
-      </tbody>
+<!--        <table>-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <th scope="col">Entry Points</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      {% for e in entry  %}-->
+<!--            <tr>-->
+<!--                  <td>{{ e }}</td>-->
+<!--            </tr>-->
+<!--      {% endfor %}-->
+<!--      </tbody>-->
 
-    </table>
-         <table>
-      <thead>
-        <tr>
-          <th scope="col">Exit Points</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for e in exit  %}
-            <tr>
-                  <td>{{ e }}</td>
-            </tr>
-      {% endfor %}
-      </tbody>
-    </table>
+<!--    </table>-->
+<!--         <table>-->
+<!--      <thead>-->
+<!--        <tr>-->
+<!--          <th scope="col">Exit Points</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--      {% for e in exit  %}-->
+<!--            <tr>-->
+<!--                  <td>{{ e }}</td>-->
+<!--            </tr>-->
+<!--      {% endfor %}-->
+<!--      </tbody>-->
+<!--    </table>-->
 
     {%endif%}
     <a href="{% url 'home' %}">Go Back To home</a>
