@@ -162,6 +162,11 @@ def pivot_points(close,high,low,date):
     count = 0
     high_max = 0
     low_min = 320000
+    final_high.clear()
+    final_low.clear()
+    final_close.clear()
+    final_counts.clear()
+
     for i in range(len(close)):
         date_st = str(date[i])
         if date_st[5] == "0" and date_st[6] == "1":
@@ -558,7 +563,7 @@ def Rsi_low(low, t):
 
    return rsi_L
 
-def stoch(source,close, high, low, t,rt):
+def stoch(source, high, low, t,rt,close):
     rsi_high = []
     rsi_low = []
 
@@ -621,7 +626,7 @@ def S_RSI(close, t, K, D, rt):
     # D= moving average of K
 
     rsi =RSI(close, rt)
-    Stochstic,count=stoch(rsi, rsi, rsi,t,rt)
+    Stochstic,count=stoch(rsi, rsi, rsi,t,rt,close)
     k = sma(Stochstic,K,count)
     d = sma(k,D,count)
 
@@ -656,7 +661,7 @@ def IC_low(low,t):
         ic_low.append(-1)
 
     i = 0
-    for j in range(t, len(high)+1):
+    for j in range(t, len(low)+1):
         LOW= low[i:t]
         ic_low.append(min(LOW))
         t += 1
@@ -664,7 +669,7 @@ def IC_low(low,t):
 
     return ic_low
 
-def average(ic_high,ic_low,):
+def average(ic_high,ic_low,high):
     cnt=0
     cnt1=0
     cnt2=0
@@ -698,7 +703,7 @@ def lag(close,time):
 
     return lag1
 
-def Icloud(c_period,b_period,span_b_period,lag_span_period,close,high,low):
+def Icloud(high,low,close,c_period,b_period,span_b_period,lag_span_period):
 
     #c_line is conversion line also known as Tenken-san
     #b_line is base line also known as kijun-san
@@ -706,17 +711,17 @@ def Icloud(c_period,b_period,span_b_period,lag_span_period,close,high,low):
 
     c_high=IC_high(high,c_period)
     c_low=IC_low(low,c_period)
-    conversion_line=average(c_high,c_low)
+    conversion_line=average(c_high,c_low,high)
 
     b_high=IC_high(high,b_period)
     b_low=IC_low(low,b_period)
-    base_line=average(b_high,b_low)
+    base_line=average(b_high,b_low,high)
 
-    span_a=average(conversion_line,base_line)
+    span_a=average(conversion_line,base_line,high)
 
     span_b_high = IC_high(high,span_b_period)
     span_b_low = IC_low(low,span_b_period)
-    span_b= average(span_b_high,span_b_low)
+    span_b= average(span_b_high,span_b_low,high)
 
     lag_span=lag(close,lag_span_period)
 
