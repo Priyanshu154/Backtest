@@ -163,6 +163,8 @@ def home(stock_name, indicator_entry, parameter_entry, value_entry, indicator_ex
     openn = data_reset['Open'].to_list()
     date = data_reset['Date'].to_list()
     dt = data_reset['date_ax'].to_list()
+    volume = data_reset['Volume'].to_list()
+
     count_entry = len(indicator_entry)
     count_exit = len(indicator_exit)
     for i in range(len(indicator_entry)):
@@ -1969,6 +1971,8 @@ def home(stock_name, indicator_entry, parameter_entry, value_entry, indicator_ex
 
     total = []
     ref = 0
+    entry_ret = []
+    exit_ret = []
     #choice = input("Do you want multiple entries for single exit , Enter Yes/No : ")
     choice = "Yes"
     if choice == "No":
@@ -1979,9 +1983,11 @@ def home(stock_name, indicator_entry, parameter_entry, value_entry, indicator_ex
             for i in range(len(entry_date_points)):
                 if entry_dt_points[i] > ref:
                     price_entry = entry_close_points[i]
+                    entry_ret.append(entry_date_points[i])
                     for j in range(len(exit_date_points)):
                         if exit_dt_points[j] > entry_dt_points[i]:
                             price_exit = exit_close_points[j]
+                            exit_ret.append(exit_date_points[j])
                             total.append(((price_exit - price_entry) / price_exit) * 100)
                             ref = exit_dt_points[j]
                             break
@@ -1993,12 +1999,18 @@ def home(stock_name, indicator_entry, parameter_entry, value_entry, indicator_ex
         else:
             for i in range(len(entry_date_points)):
                 price_entry = entry_close_points[i]
+
+                entry_ret.append(entry_date_points[i])
+
                 for j in range(len(exit_date_points)):
                     if exit_dt_points[j] > entry_dt_points[i]:
                         price_exit = exit_close_points[j]
+                        if( not (exit_date_points[j] in exit_ret) ):
+                            exit_ret.append(exit_date_points[j])
+
                         total.append(((price_exit - price_entry) / price_exit) * 100)
                         break
             print(f'Your Profit/Loss is {statistics.mean(total):.2f} %')
     print(entry_date_points)
     print(entry_dt_points)
-    return statistics.mean(total),entry_date_points,exit_date_points
+    return statistics.mean(total),entry_ret,exit_ret

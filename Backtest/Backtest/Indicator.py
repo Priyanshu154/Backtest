@@ -13,26 +13,25 @@ nifty_500 = ['3MINDIA.NS','ACC.NS','AIAENG.NS','APLAPOLLO.NS','AUBANK.NS','AARTI
 
 # datetime is a pandas function to access data of that particular date
 # datetime(year , month , day)
-start = datetime(2019,8,6)
-end = datetime(2020,8,3)
-
-# web.DataReader helps to access data of a particular stock from the site you want from starting date to ending date
-# data = web.DataReader('Stock Name', 'Website', starting date, ending date)
-# to see how values are stored in data please print to verify
-data = web.DataReader('RELIANCE.NS', 'yahoo', start, end)
-
-# data.reset_index() will shift the Date from Header column to normal column you can print to check
-data_reset = data.reset_index()
-# This line is compulsory to make Date  column readable to python programme
-data_reset['date_ax'] = data_reset['Date'].apply(lambda date: date2num(date))
-# putting every column in an individual list
-close = data_reset['Close'].to_list()
-high = data_reset['High'].to_list()
-low = data_reset['Low'].to_list()
-openn = data_reset['Open'].to_list()
-date = data_reset['Date'].to_list()
-dt = data_reset['date_ax'].to_list()
-volume = data_reset['Volume'].to_list()
+# start = datetime(2019,8,6)
+# end = datetime(2020,8,3)
+#
+# # web.DataReader helps to access data of a particular stock from the site you want from starting date to ending date
+# # data = web.DataReader('Stock Name', 'Website', starting date, ending date)
+# # to see how values are stored in data please print to verify
+# data = web.DataReader('RELIANCE.NS', 'yahoo', start, end)
+#
+# # data.reset_index() will shift the Date from Header column to normal column you can print to check
+# data_reset = data.reset_index()
+# # This line is compulsory to make Date  column readable to python programme
+# data_reset['date_ax'] = data_reset['Date'].apply(lambda date: date2num(date))
+# # putting every column in an individual list
+# close = data_reset['Close'].to_list()
+# high = data_reset['High'].to_list()
+# low = data_reset['Low'].to_list()
+# openn = data_reset['Open'].to_list()
+# date = data_reset['Date'].to_list()
+# dt = data_reset['date_ax'].to_list()
 
 # RSI starts
 def RSI(close, t):
@@ -158,7 +157,7 @@ def assigning(countt,high_maxx,low_minn,closee):
     final_low.append(low_minn)
     final_close.append(closee)
 
-def pivot_points():
+def pivot_points(close,high,low,date):
     flag = 0
     count = 0
     high_max = 0
@@ -409,7 +408,7 @@ def EMA_MACD(t, macd):
     return ema
 
 
-def MACD(x, y, z):
+def MACD(close,x, y, z):
     val_pr = EMA_d(close, x)
     val2_pr = EMA_d(close, y)
     val = []
@@ -444,7 +443,7 @@ def MACD(x, y, z):
 
     return macd_line, signal_line, macd_histogram
 
-macd_line, signal_line, macd_histogram = MACD(12, 26, 9)
+# macd_line, signal_line, macd_histogram = MACD(close, 12, 26, 9)
 #MACD Ends Here
 
 #Bollinger Band Starts Here
@@ -485,7 +484,7 @@ def fib_retracement(p1, p2):
 #Fibonacci Retracement ends here
 
 #Money Flow Index starts here
-def MFI(t):
+def MFI(high,low,close,volume,t):
     mfi = []        #money flow index
     typ = []        #typical price
     raw_money = []  #raw money flow
@@ -559,7 +558,7 @@ def Rsi_low(low, t):
 
    return rsi_L
 
-def stoch(source, high, low, t,rt):
+def stoch(source,close, high, low, t,rt):
     rsi_high = []
     rsi_low = []
 
@@ -728,7 +727,7 @@ def Icloud(c_period,b_period,span_b_period,lag_span_period,close,high,low):
 
 #ATR Starts Ahi Thi
 
-def tr():
+def tr(high,low,close):
     X=[]
     Y=[-1]
     Z=[-1]
@@ -807,7 +806,7 @@ def WILLIAM_R(source,t,high,low):
 
 #Super Trend Starts Ahi Thi
 #tx3 uses rma in atr & super trend uses atr so if you want to check use rma in atr in tx3
-def ST(s_atr,t_atr,mul,high,low):
+def ST(s_atr,t_atr,mul,high,low,close):
     #s_atr Is Source for ATR & t_atr is Time Period For ATR
     #mul is multiplier
     up=[]
@@ -874,7 +873,7 @@ def changel(low):
 
     return l
 
-def ADX(adx_t,di_t,high,low):
+def ADX(adx_t,di_t,high,low,close):
 
     plus_di=[-1]
     minus_di=[-1]
