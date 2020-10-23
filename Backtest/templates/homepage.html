@@ -129,7 +129,7 @@
         <h1 class="title"> Hi <span style="color:#aef682;">{{ request.user.username }}!!</span> Welcome To Backtesting <i class="fas fa-chart-line"></i></h1>
     {% endif %}
 
-    <form id ="backtesting_form" action = "{% url 'result' %}" onsubmit = "submit_form()">
+    <form id ="backtesting_form" method = "POST" action = "{% url 'result' %}" onsubmit = "submit_form()">{%csrf_token%}
         
         <div id = "stock_select">
             <label for = "stock" class="LABEL">Choose a Stock:</label>
@@ -143,22 +143,27 @@
                 <select name = "entry1" id = "entry1" onchange = "add_parameter_value(1,'entry')">
                     <option disabled selected value> -- Select an Indicator -- </option>
                     <option value="rsi">RSI</option>
-                    <option value="bollinger_band">Bollinger band</option>
                     <option value="mfi">Money Flow Index</option>
-                    <option value="ema(10)">EMA(10)</option>
-		    <option value="sma">Simple Moving Average</option>
-                    <option value="rma">Rolling Moving Average</option>
-                    <option value="wma">Weighted Moving Average</option>
+                    <option value="ema10">EMA(10)</option>
+                    <option value="ema10">EMA(20)</option>
+                    <option value="ema10">EMA(50)</option>
+                    <option value="ema10">EMA(100)</option>
+                    <option value="ema10">EMA(200)</option>
+
+                    <option value="sma">SMA(10)</option>
+                    <option value="sma">SMA(20)</option>
+                    <option value="sma">SMA(50)</option>
+                    <option value="sma">SMA(100)</option>
+                    <option value="sma">SMA(200)</option>
+
                     <option value="roc">Rate Of Change</option>
                     <option value="macd">MACD</option>
-                    <option value="atr">Average True Range</option>
                     <option value="pivot_points">Pivot Points</option>
-                    <option value="fibonacci_retracement">Fibonacci Retracement</option>
-                    <option value="stochastic_rsi">Stochastic RSI</option>
-                    <option value="ichimoku_cloud">Ichimoku Cloud</option>
-                    <option value="williams_r">Williams %R</option>
-                    <option value="super_trend">Super Trend</option>
-                    <option value="adx">Average Directional Index</option>
+                    <option value="srsi">Fast Line(Stochastic RSI(14))</option>
+                    <option value="wil">Williams %R</option>
+                    <option value="clo">Close Price</option>
+                    <option value="cl">Conversion Line</option>
+                    <option value="ls">Lag span</option>
                 </select>
             </div>
             
@@ -170,24 +175,30 @@
         <div id = "exit_rules">
             <div id = "exit1_form">
                 <select name = "exit1" id = "exit1" onchange = "add_parameter_value(1, 'exit')">
-                        <option disabled selected value> -- Select an Indicator -- </option>
-                        <option value="rsi">RSI</option>
-                        <option value="bollinger_band">Bollinger band</option>
-                        <option value="mfi">Money Flow Index</option>
-                        <option value="ema(10)">EMA(10)</option>
-			<option value="sma">Simple Moving Average</option>
-                        <option value="rma">Rolling Moving Average</option>
-                        <option value="wma">Weighted Moving Average</option>
-                        <option value="roc">Rate Of Change</option>
-                        <option value="macd">MACD</option>
-                        <option value="atr">Average True Range</option>
-                        <option value="pivot_points">Pivot Points</option>
-                        <option value="fibonacci_retracement">Fibonacci Retracement</option>
-                        <option value="stochastic_rsi">Stochastic RSI</option>
-                        <option value="ichimoku_cloud">Ichimoku Cloud</option>
-                        <option value="williams_r">Williams %R</option>
-                        <option value="super_trend">Super Trend</option>
-                        <option value="adx">Average Directional Index</option>
+                <option disabled selected value> -- Select an Indicator -- </option>
+                    <option value="rsi">RSI</option>
+                    <option value="mfi">Money Flow Index</option>
+                    <option value="ema10">EMA(10)</option>
+                    <option value="ema10">EMA(20)</option>
+                    <option value="ema10">EMA(50)</option>
+                    <option value="ema10">EMA(100)</option>
+                    <option value="ema10">EMA(200)</option>
+
+                    <option value="sma">SMA(10)</option>
+                    <option value="sma">SMA(20)</option>
+                    <option value="sma">SMA(50)</option>
+                    <option value="sma">SMA(100)</option>
+                    <option value="sma">SMA(200)</option>
+
+                    <option value="roc">Rate Of Change</option>
+                    <option value="macd">MACD</option>
+                    <option value="pivot_points">Pivot Points</option>
+                    <option value="srsi">Fast Line(Stochastic RSI(14))</option>
+                    <option value="wil">Williams %R</option>
+                    <option value="clo">Close Price</option>
+                    <option value="cl">Conversion Line</option>
+                    <option value="ls">Lag span</option>
+
                 </select>
             </div>
             <button type="button" onclick = "add_rule('exit')" class="btn btn-success">Add</button>
@@ -198,22 +209,97 @@
 
     <div style = "display: none;" id = "parameters_add">
         <select class = "parameter">
-            <option value = "Crossover">Cross over</option>
-            <option value = "Crosses_under">Cross under</option>
-            <option value = "Above">Above</option>
-            <option value = "Below">Below</option>
+            <option value = "crossover">Cross over</option>
+            <option value = "crossunder">Cross under</option>
+            <option value = "above">Above</option>
+            <option value = "below">Below</option>
         </select>
     </div>
     
     <div style="display:none" id = "rsi_value">
             <input type =  "number" min = "0" max = "100" class="value">
     </div>
-    
-    <div style = "display:none" id = "bollinger_band_value">
+    <div style="display:none" id = "srsi_value">
+        <select class = "value">
+            <option value = "slow">Slow</option>
+            <option value = "0">0</option>
+            <option value = "10">10</option>
+            <option value = "20">20</option>
+            <option value = "30">30</option>
+            <option value = "40">40</option>
+            <option value = "50">50</option>
+            <option value = "60">60</option>
+            <option value = "70">70</option>
+            <option value = "80">80</option>
+            <option value = "90">90</option>
+            <option value = "100">100</option>
+        </select>
+    </div>
+    <div style="display:none" id = "wil_value">
+            <input type =  "number" min = "0" max = "100" class="value">
+    </div>
+
+    <div style="display:none" id = "roc_value">
+            <input type =  "number" class="value">
+    </div>
+
+    <div style = "display:none" id = "clo_value">
         <select class = "value">
             <option value = "lb">Lower band</option>
             <option value = "mb">Middle band</option>
             <option value = "ub">Upper band</option>
+            <option value = "ema10">EMA(10)</option>
+            <option value = "ema20">EMA(20)</option>
+            <option value = "ema50">EMA(50)</option>
+            <option value = "ema100">EMA(100)</option>
+            <option value = "ema200">EMA(200)</option>
+
+            <option value = "pp">Pivot Point</option>
+            <option value = "s1">Support 1</option>
+            <option value = "s2">Support 2</option>
+            <option value = "s3">Support 3</option>
+
+            <option value = "r1">Resistance 1</option>
+            <option value = "r2">Resistance 2</option>
+            <option value = "r3">Resistance 3</option>
+
+
+            <option value = "sma10">SMA(10)</option>
+            <option value = "sma20">SMA(20)</option>
+            <option value = "sma50">SMA(50)</option>
+            <option value = "sma100">SMA(100)</option>
+            <option value = "sma200">SMA(200)</option>
+
+            <option value = "cl">Conversion Line</option>
+            <option value = "bl">Base Line</option>
+            <option value = "ls">Lag span</option>
+            <option value = "gc">Green Cloud</option>
+            <option value = "rc">Red Cloud</option>
+
+        </select>
+    </div>
+    <div style = "display:none" id = "macd_value">
+        <select class = "value">
+            <option value = "zero">Zero Line</option>
+            <option value = "sig">Signal Line </option>
+        </select>
+    </div>
+    <div style = "display:none" id = "cl_value">
+        <select class = "value">
+            <option value = "cl">Conversion Line</option>
+            <option value = "bl">Base Line</option>
+            <option value = "ls">Lag span</option>
+            <option value = "gc">Green Cloud</option>
+            <option value = "rc">Red Cloud</option>
+        </select>
+    </div>
+    <div style = "display:none" id = "ls_value">
+        <select class = "value">
+            <option value = "cl">Conversion Line</option>
+            <option value = "bl">Base Line</option>
+            <option value = "ls">Lag span</option>
+            <option value = "gc">Green Cloud</option>
+            <option value = "rc">Red Cloud</option>
         </select>
     </div>
 
@@ -221,13 +307,97 @@
         <input type =  "number" min = "0" max = "100" class="value">
     </div>
     
-    <div style="display:none" id = "ema(10)_value">
+    <div style="display:none" id = "ema10_value">
         <select class="value">
-            <option value = "ema(10)">EMA(10)</option>
-            <option value = "ema(20)">EMA(20)</option>
-            <option value = "ema(50)">EMA(50)</option>
-            <option value = "ema(100)">EMA(100)</option>
-            <option value = "ema(200)">EMA(200)</option>
+            <option value = "ema10">EMA(10)</option>
+            <option value = "ema20">EMA(20)</option>
+            <option value = "ema50">EMA(50)</option>
+            <option value = "ema100">EMA(100)</option>
+            <option value = "ema200">EMA(200)</option>
+        </select>
+    </div>
+    <div style="display:none" id = "ema20_value">
+        <select class="value">
+            <option value = "ema10">EMA(10)</option>
+            <option value = "ema20">EMA(20)</option>
+            <option value = "ema50">EMA(50)</option>
+            <option value = "ema100">EMA(100)</option>
+            <option value = "ema200">EMA(200)</option>
+        </select>
+    </div>
+   <div style="display:none" id = "ema50_value">
+        <select class="value">
+            <option value = "ema10">EMA(10)</option>
+            <option value = "ema20">EMA(20)</option>
+            <option value = "ema50">EMA(50)</option>
+            <option value = "ema100">EMA(100)</option>
+            <option value = "ema200">EMA(200)</option>
+        </select>
+    </div>
+   <div style="display:none" id = "ema100_value">
+        <select class="value">
+            <option value = "ema10">EMA(10)</option>
+            <option value = "ema20">EMA(20)</option>
+            <option value = "ema50">EMA(50)</option>
+            <option value = "ema100">EMA(100)</option>
+            <option value = "ema200">EMA(200)</option>
+        </select>
+    </div>
+   <div style="display:none" id = "ema200_value">
+        <select class="value">
+            <option value = "ema10">EMA(10)</option>
+            <option value = "ema20">EMA(20)</option>
+            <option value = "ema50">EMA(50)</option>
+            <option value = "ema100">EMA(100)</option>
+            <option value = "ema200">EMA(200)</option>
+        </select>
+    </div>
+
+
+
+    <div style="display:none" id = "sma10_value">
+        <select class="value">
+            <option value = "sma10">SMA(10)</option>
+            <option value = "sma20">SMA(20)</option>
+            <option value = "sma50">SMA(50)</option>
+            <option value = "sma100">SMA(100)</option>
+            <option value = "sma200">SMA(200)</option>
+        </select>
+    </div>
+    <div style="display:none" id = "sma20_value">
+        <select class="value">
+            <option value = "sma10">SMA(10)</option>
+            <option value = "sma20">SMA(20)</option>
+            <option value = "sma50">SMA(50)</option>
+            <option value = "sma100">SMA(100)</option>
+            <option value = "sma200">SMA(200)</option>
+        </select>
+    </div>
+    <div style="display:none" id = "sma50_value">
+        <select class="value">
+            <option value = "sma10">SMA(10)</option>
+            <option value = "sma20">SMA(20)</option>
+            <option value = "sma50">SMA(50)</option>
+            <option value = "sma100">SMA(100)</option>
+            <option value = "sma200">SMA(200)</option>
+        </select>
+    </div>
+    <div style="display:none" id = "sma100_value">
+        <select class="value">
+            <option value = "sma10">SMA(10)</option>
+            <option value = "sma20">SMA(20)</option>
+            <option value = "sma50">SMA(50)</option>
+            <option value = "sma100">SMA(100)</option>
+            <option value = "sma200">SMA(200)</option>
+        </select>
+    </div>
+    <div style="display:none" id = "sma200_value">
+        <select class="value">
+            <option value = "sma10">SMA(10)</option>
+            <option value = "sma20">SMA(20)</option>
+            <option value = "sma50">SMA(50)</option>
+            <option value = "sma100">SMA(100)</option>
+            <option value = "sma200">SMA(200)</option>
         </select>
     </div>
 
