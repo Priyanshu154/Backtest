@@ -1,42 +1,127 @@
 <html>
 <head>
     <title>Result</title>
+
+    <!-- Fontawesome CDN -->
+	<script src="https://kit.fontawesome.com/0c287f6377.js" crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  
+	<link rel="stylesheet" href="/resources/demos/style.css">
+  
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <style>
+        .BODY{
+		font-weight: bold;
+		background-color: #282828;
+		color: #ffffff;
+		letter-spacing: 2px;
+		font-size: 18px;
+	    }
+
+        h1 {
+		    font-size: 54px;
+		    padding-top: 25px;
+			padding-bottom: 25px;
+		    font-weight: bold;
+		    color: #aef682;		
+		    letter-spacing: 2px;
+			text-align: center;
+	    }
+
+        .tabel-dark, .table-hover {
+            width: 250px;
+            margin-left: auto;
+            margin-right: auto;
+            letter-spacing: 1px;
+        }
+
+        tr:hover {
+            color: #282828;
+            font-weight: bold;
+        }
+
+        thead, tr {
+            text-align: center;
+        }
+
+        .LABEL {
+			letter-spacing: 1px;
+			font-size: 25px;
+			margin-top: 50px;
+            color: #faf9ae;
+		}
+
+        .LABEL:hover {
+            font-size: 28px;
+        }
+
+        .text {
+            margin-top: 20px;
+            margin-left: 20%;
+        }
+
+        .link {
+            letter-spacing: 1px;
+			font-size: 24px;
+			margin-top: 30px;
+            text-align: center;
+        }
+    </style>
 </head>
 
-<body>
-    <p>{{profit}}</p>
+<body class="BODY">
     {% if profit != "No match for this strategy" %}
-        <table>
-      <thead>
-        <tr>
-          <th scope="col">Entry Points</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for e in entry  %}
+        <h1>{{profit}} %</h1>
+    {% else %}
+        <h1>{{profit}}</h1>
+    {% endif %}
+
+    {% if profit != "No match for this strategy" %}
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <th scope="col" class="LABEL">Entry Points</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for e in entry  %}
             <tr>
                   <td>{{ e }}</td>
             </tr>
-      {% endfor %}
-      </tbody>
+            {% endfor %}
+        </tbody>
 
     </table>
-         <table>
-      <thead>
-        <tr>
-          <th scope="col">Exit Points</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for e in exit  %}
+    <table class="table table-hover table-dark">
+        <thead>
             <tr>
-                  <td>{{ e }}</td>
+                <th scope="col" class="LABEL">Exit Points</th>
             </tr>
-      {% endfor %}
-      </tbody>
+        </thead>
+        
+        <tbody>
+            {% for e in exit  %}
+                  <tr>
+                      <td>{{ e }}</td>
+                 </tr>
+            {% endfor %}
+        </tbody>
     </table>
 
     {%endif%}
-    <a href="{% url 'home' %}">Go Back To home</a>
+    <a href="{% url 'home' %}" class="link"><center style="margin-bottom: 30px; margin-top: 20px;">Go Back to Home</center></a>
 </body>
 </html>
