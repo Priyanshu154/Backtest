@@ -31,7 +31,7 @@
 	    }
 
         h1 {
-		    font-size: 54px;
+		    font-size: 65px;
 		    padding-top: 25px;
 			padding-bottom: 25px;
 		    font-weight: bold;
@@ -83,7 +83,7 @@
 
 <body class="BODY">
     {% if profit != "No match for this strategy" %}
-        <h1>{{profit}} %</h1>
+        <h1>{{profit|floatformat:2}} %</h1>
     {% else %}
         <h1>{{profit}}</h1>
     {% endif %}
