@@ -40,6 +40,15 @@
 			text-align: center;
 	    }
 
+        h1.fail {
+            color: #ff4e4e;
+            padding-top: 50px;
+        }
+
+        h1.loss {
+            color: #ff4e4e;
+        }
+
         .tabel-dark, .table-hover {
             width: 250px;
             margin-left: auto;
@@ -83,9 +92,13 @@
 
 <body class="BODY">
     {% if profit != "No match for this strategy" %}
-        <h1>{{profit|floatformat:2}} %</h1>
+        {% if profit > 0 %}
+            <h1>{{profit|floatformat:2}} %</h1>
+        {%else%}
+            <h1 class="loss">{{profit|floatformat:2}} %</h1>
+        {%endif%}
     {% else %}
-        <h1>{{profit}}</h1>
+        <h1 class="fail">{{profit}}</h1>
     {% endif %}
 
     {% if profit != "No match for this strategy" %}
