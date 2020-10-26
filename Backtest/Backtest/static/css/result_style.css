@@ -1,0 +1,65 @@
+.BODY{
+font-weight: bold;
+background-color: #282828;
+color: #ffffff;
+letter-spacing: 2px;
+font-size: 18px;
+}
+
+h1 {
+font-size: 65px;
+padding-top: 25px;
+padding-bottom: 25px;
+font-weight: bold;
+color: #aef682;
+letter-spacing: 2px;
+text-align: center;
+}
+
+h1.fail {
+    color: #ff4e4e;
+    padding-top: 50px;
+}
+
+h1.loss {
+    color: #ff4e4e;
+}
+
+.tabel-dark, .table-hover {
+    width: 250px;
+    margin-left: auto;
+    margin-right: auto;
+    letter-spacing: 1px;
+}
+
+tr:hover {
+    color: #282828;
+    font-weight: bold;
+}
+
+thead, tr {
+    text-align: center;
+}
+
+.LABEL {
+letter-spacing: 1px;
+font-size: 25px;
+margin-top: 50px;
+    color: #faf9ae;
+}
+
+.LABEL:hover {
+    font-size: 28px;
+}
+
+.text {
+    margin-top: 20px;
+    margin-left: 20%;
+}
+
+.link {
+    letter-spacing: 1px;
+font-size: 24px;
+margin-top: 30px;
+    text-align: center;
+}

@@ -1,0 +1,79 @@
+.BODY{
+font-weight: bold;
+background-color: #282828;
+color: #ffffff;
+letter-spacing: 2px;
+    font-size: 18px;
+    margin-left: 13.5%;
+}
+
+input{
+width: 325px;
+font-size: 18px;
+color: #000000;
+  margin-right: 30px;
+    padding-left: 10px;
+    height: 35px;
+}
+
+select {
+    font-size: 16px;
+color: #000000;
+    margin-right: 35px;
+    height: 35px;
+width: 200px;
+}
+
+.title {
+font-size: 48px;
+padding-top: 25px;
+  padding-bottom: 25px;
+font-weight: bold;
+color: #faf9ae;
+letter-spacing: 2px;
+    text-align: center;
+    margin-left: -13.5%;
+}
+
+.LABEL {
+  letter-spacing: 1px;
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+.remove {
+  background-color: #ed1c24;
+  border-color: #ffffff;
+  color: #ffffff;
+  height: 5%;
+  width: 100px;
+  border-radius: 5px;
+  border-width: thin;
+}
+
+.remove:hover {
+  background-color: #c1191f;
+  border: #ffffff;
+}
+
+.btn-success{
+  margin-top: 10px;
+}
+
+.btn-primary {
+  font-size: 24px;
+  font-weight: bold;
+  width: 150px;
+  margin-left: -13.5%;
+  margin-right: 0px;
+  padding: 0 0 0 0px;
+  height: 40px;;
+}
+
+.value {
+  width: 120px;
+}
+
+.parameter {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    {% load static %}
+	  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<title>BackTesting</title>
+  <link rel="icon" href="{% static 'favicon.ico' %}">
+	<!-- Fontawesome CDN -->
+	<script src="https://kit.fontawesome.com/0c287f6377.js" crossorigin="anonymous"></script>
+
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+	<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <link rel="stylesheet" href="{% static 'css/homepage_style.css' %}">
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+</head>
+
+  <body class="BODY">
+
+	{% if user.is_authenticated %}
+		<h1 class="title"> Hi <span style="color:#aef682;">{{ request.user.username }}!!</span> Welcome To Backtesting <i class="fas fa-chart-line"></i></h1>
+	{% endif %}
+
+	<form id ="backtesting_form" method = "POST" action = "{% url 'result' %}" onsubmit = "submit_form()">{%csrf_token%}
+
+		<div id = "stock_select">
+			<label for = "stock" class="LABEL">Choose a Stock:</label>
+			<input id = "stock" name="stock" type = "text">
+		</div>
+
+		<p class="LABEL">Entry rules: <br></p>
+
+		<div id = "entry_rules">
+			<div id = "entry1_form">
+				<select name = "entry1" id = "entry1" onchange = "add_parameter_value(1,'entry')">
+					<option disabled selected value> -- Select an Indicator -- </option>
+					<option value="rsi">RSI</option>
+					<option value="mfi">Money Flow Index</option>
+					<option value="ema10">EMA(10)</option>
+					<option value="ema10">EMA(20)</option>
+					<option value="ema10">EMA(50)</option>
+					<option value="ema10">EMA(100)</option>
+					<option value="ema10">EMA(200)</option>
+
+					<option value="sma10">SMA(10)</option>
+					<option value="sma20">SMA(20)</option>
+					<option value="sma50">SMA(50)</option>
+					<option value="sma100">SMA(100)</option>
+					<option value="sma200">SMA(200)</option>
+
+					<option value="roc">Rate Of Change</option>
+					<option value="macd">MACD</option>
+					<option value="srsi">Fast Line(Stochastic RSI(14))</option>
+					<option value="wil">Williams %R</option>
+					<option value="clo">Close Price</option>
+					<option value="cl">Conversion Line</option>
+					<option value="ls">Lag span</option>
+				</select>
+			</div>
+
+			<button type="button" onclick = "add_rule('entry')" class="btn btn-success">Add</button>
+		</div>
+
+		<p class="LABEL">Exit rules: <br></p>
+
+		<div id = "exit_rules">
+			<div id = "exit1_form">
+				<select name = "exit1" id = "exit1" onchange = "add_parameter_value(1, 'exit')">
+				<option disabled selected value> -- Select an Indicator -- </option>
+					<option value="rsi">RSI</option>
+					<option value="mfi">Money Flow Index</option>
+					<option value="ema10">EMA(10)</option>
+					<option value="ema10">EMA(20)</option>
+					<option value="ema10">EMA(50)</option>
+					<option value="ema10">EMA(100)</option>
+					<option value="ema10">EMA(200)</option>
+
+					<option value="sma10">SMA(10)</option>
+					<option value="sma20">SMA(20)</option>
+					<option value="sma50">SMA(50)</option>
+					<option value="sma100">SMA(100)</option>
+					<option value="sma200">SMA(200)</option>
+
+					<option value="roc">Rate Of Change</option>
+					<option value="macd">MACD</option>
+					<option value="srsi">Fast Line(Stochastic RSI(14))</option>
+					<option value="wil">Williams %R</option>
+					<option value="clo">Close Price</option>
+					<option value="cl">Conversion Line</option>
+					<option value="ls">Lag span</option>
+
+				</select>
+			</div>
+			<button type="button" onclick = "add_rule('exit')" class="btn btn-success">Add</button>
+		</div>
+
+		<center><input type="submit" onclick = "submit_form()" value = "Backtest" class="btn btn-primary"></button></center>
+	</form>
+
+	<div style = "display: none;" id = "parameters_add">
+		<select class = "parameter">
+			<option value = "crossover">Cross over</option>
+			<option value = "crossunder">Cross under</option>
+			<option value = "above">Above</option>
+			<option value = "below">Below</option>
+		</select>
+	</div>
+
+	<div style="display:none" id = "rsi_value">
+			<input type =  "number" min = "0" max = "100" class="value">
+	</div>
+	<div style="display:none" id = "srsi_value">
+		<select class = "value">
+			<option value = "slow">Slow</option>
+			<option value = "0">0</option>
+			<option value = "10">10</option>
+			<option value = "20">20</option>
+			<option value = "30">30</option>
+			<option value = "40">40</option>
+			<option value = "50">50</option>
+			<option value = "60">60</option>
+			<option value = "70">70</option>
+			<option value = "80">80</option>
+			<option value = "90">90</option>
+			<option value = "100">100</option>
+		</select>
+	</div>
+	<div style="display:none" id = "wil_value">
+			<input type =  "number" class="value">
+	</div>
+
+	<div style="display:none" id = "roc_value">
+			<input type =  "number" class="value">
+	</div>
+
+	<div style = "display:none" id = "clo_value">
+		<select class = "value">
+			<option value = "lb">Lower band</option>
+			<option value = "mb">Middle band</option>
+			<option value = "up">Upper band</option>
+			<option value = "ema10">EMA(10)</option>
+			<option value = "ema20">EMA(20)</option>
+			<option value = "ema50">EMA(50)</option>
+			<option value = "ema100">EMA(100)</option>
+			<option value = "ema200">EMA(200)</option>
+
+			<option value = "pp">Pivot Point</option>
+			<option value = "s1">Support 1</option>
+			<option value = "s2">Support 2</option>
+			<option value = "s3">Support 3</option>
+
+			<option value = "r1">Resistance 1</option>
+			<option value = "r2">Resistance 2</option>
+			<option value = "r3">Resistance 3</option>
+
+
+			<option value = "sma10">SMA(10)</option>
+			<option value = "sma20">SMA(20)</option>
+			<option value = "sma50">SMA(50)</option>
+			<option value = "sma100">SMA(100)</option>
+			<option value = "sma200">SMA(200)</option>
+
+			<option value = "cl">Conversion Line</option>
+			<option value = "bl">Base Line</option>
+			<option value = "ls">Lag span</option>
+			<option value = "gc">Green Cloud</option>
+			<option value = "rc">Red Cloud</option>
+
+		</select>
+	</div>
+	<div style = "display:none" id = "macd_value">
+		<select class = "value">
+			<option value = "zero">Zero Line</option>
+			<option value = "sig">Signal Line </option>
+		</select>
+	</div>
+	<div style = "display:none" id = "cl_value">
+		<select class = "value">
+			<option value = "cl">Conversion Line</option>
+			<option value = "bl">Base Line</option>
+			<option value = "ls">Lag span</option>
+			<option value = "gc">Green Cloud</option>
+			<option value = "rc">Red Cloud</option>
+		</select>
+	</div>
+	<div style = "display:none" id = "ls_value">
+		<select class = "value">
+			<option value = "cl">Conversion Line</option>
+			<option value = "bl">Base Line</option>
+			<option value = "ls">Lag span</option>
+			<option value = "gc">Green Cloud</option>
+			<option value = "rc">Red Cloud</option>
+		</select>
+	</div>
+
+	<div style="display:none" id = "mfi_value">
+		<input type =  "number" min = "0" max = "100" class="value">
+	</div>
+
+	<div style="display:none" id = "ema10_value">
+		<select class="value">
+			<option value = "ema10">EMA(10)</option>
+			<option value = "ema20">EMA(20)</option>
+			<option value = "ema50">EMA(50)</option>
+			<option value = "ema100">EMA(100)</option>
+			<option value = "ema200">EMA(200)</option>
+		</select>
+	</div>
+	<div style="display:none" id = "ema20_value">
+		<select class="value">
+			<option value = "ema10">EMA(10)</option>
+			<option value = "ema20">EMA(20)</option>
+			<option value = "ema50">EMA(50)</option>
+			<option value = "ema100">EMA(100)</option>
+			<option value = "ema200">EMA(200)</option>
+		</select>
+	</div>
+   <div style="display:none" id = "ema50_value">
+		<select class="value">
+			<option value = "ema10">EMA(10)</option>
+			<option value = "ema20">EMA(20)</option>
+			<option value = "ema50">EMA(50)</option>
+			<option value = "ema100">EMA(100)</option>
+			<option value = "ema200">EMA(200)</option>
+		</select>
+	</div>
+   <div style="display:none" id = "ema100_value">
+		<select class="value">
+			<option value = "ema10">EMA(10)</option>
+			<option value = "ema20">EMA(20)</option>
+			<option value = "ema50">EMA(50)</option>
+			<option value = "ema100">EMA(100)</option>
+			<option value = "ema200">EMA(200)</option>
+		</select>
+	</div>
+   <div style="display:none" id = "ema200_value">
+		<select class="value">
+			<option value = "ema10">EMA(10)</option>
+			<option value = "ema20">EMA(20)</option>
+			<option value = "ema50">EMA(50)</option>
+			<option value = "ema100">EMA(100)</option>
+			<option value = "ema200">EMA(200)</option>
+		</select>
+	</div>
+
+
+
+	<div style="display:none" id = "sma10_value">
+		<select class="value">
+			<option value = "sma10">SMA(10)</option>
+			<option value = "sma20">SMA(20)</option>
+			<option value = "sma50">SMA(50)</option>
+			<option value = "sma100">SMA(100)</option>
+			<option value = "sma200">SMA(200)</option>
+		</select>
+	</div>
+	<div style="display:none" id = "sma20_value">
+		<select class="value">
+			<option value = "sma10">SMA(10)</option>
+			<option value = "sma20">SMA(20)</option>
+			<option value = "sma50">SMA(50)</option>
+			<option value = "sma100">SMA(100)</option>
+			<option value = "sma200">SMA(200)</option>
+		</select>
+	</div>
+	<div style="display:none" id = "sma50_value">
+		<select class="value">
+			<option value = "sma10">SMA(10)</option>
+			<option value = "sma20">SMA(20)</option>
+			<option value = "sma50">SMA(50)</option>
+			<option value = "sma100">SMA(100)</option>
+			<option value = "sma200">SMA(200)</option>
+		</select>
+	</div>
+	<div style="display:none" id = "sma100_value">
+		<select class="value">
+			<option value = "sma10">SMA(10)</option>
+			<option value = "sma20">SMA(20)</option>
+			<option value = "sma50">SMA(50)</option>
+			<option value = "sma100">SMA(100)</option>
+			<option value = "sma200">SMA(200)</option>
+		</select>
+	</div>
+	<div style="display:none" id = "sma200_value">
+		<select class="value">
+			<option value = "sma10">SMA(10)</option>
+			<option value = "sma20">SMA(20)</option>
+			<option value = "sma50">SMA(50)</option>
+			<option value = "sma100">SMA(100)</option>
+			<option value = "sma200">SMA(200)</option>
+		</select>
+	</div>
+
+	<div style = "display:none" id = "remove_button">
+		<button type = "button" class = "remove">Remove</button>
+	</div>
+
+	{% if user.is_authenticated %}
+	<form method ='POST' action = "{% url 'logout' %}" id='logout'>
+		{% csrf_token %}
+			<center style="margin-left:-13.5%;margin-top: 20px;"><a href="javascript:document.getElementById('logout').submit();" class="LABEL">Logout</a></center>
+		{% endif %}
+	</form>
+
+  <script src="{% static 'js/homepage.js' %}" charset="utf-8"></script>
+
+</body>
+</html>

@@ -1,9 +1,9 @@
 <html>
-
 <head>
+	{% load static %}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Welcome</title>
-
+<link rel="icon" href="{% static 'favicon.ico' %}">
 	<!-- Fontawesome CDN -->
 	<script src="https://kit.fontawesome.com/0c287f6377.js" crossorigin="anonymous"></script>
 
@@ -16,49 +16,13 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-	<style>
-		.BODY
-		{
-			text-align: center;
-			font-weight: bold;
-			background-color: #282828;
-		}
-
-		.title
-		{
-			font-size: 48px;
-			padding-top: 25px;
-			padding-bottom: 140px;
-			font-weight: bold;
-			color: #aef682;		
-			letter-spacing: 2px;
-		}
-
-		p
-		{
-			font-size: 22px;
-			padding-top: 40px;
-		}
-
-		.link
-		{
-			font-weight: normal;
-			font-size: 22px;
-			padding-bottom: 30px;
-		}
-
-		.main-div
-		{
-			margin: 100 100 100 100px;
-			color: #ffffff;
-		}
-	</style>
+<link rel="stylesheet" href="{% static 'css/welcome_style.css' %}">
 </head>
 
 <body class='BODY'>
 
 	<h1 class="title">Welcome To Back Testing!  <i class="fas fa-chart-line"></i> </h1>
-	
+
 	<div class="main-div">
 
 		<a href="{% url 'signup'%}" class="link">Get Started by Creating a Free Account</a>

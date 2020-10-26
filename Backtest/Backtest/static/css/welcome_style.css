@@ -1,0 +1,35 @@
+.BODY
+{
+  text-align: center;
+  font-weight: bold;
+  background-color: #282828;
+}
+
+.title
+{
+  font-size: 48px;
+  padding-top: 25px;
+  padding-bottom: 140px;
+  font-weight: bold;
+  color: #aef682;
+  letter-spacing: 2px;
+}
+
+p
+{
+  font-size: 22px;
+  padding-top: 40px;
+}
+
+.link
+{
+  font-weight: normal;
+  font-size: 22px;
+  padding-bottom: 30px;
+}
+
+.main-div
+{
+  margin: 100 100 100 100px;
+  color: #ffffff;
+}
