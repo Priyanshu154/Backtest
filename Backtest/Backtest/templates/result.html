@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="{% static 'css/result_style.css' %}">
 </head>
 
-<body class="BODY" style="background-image:url({% static 'Images/SM2.jpg' %}); opacity: 1.5;">
+<body class="BODY" style="background-image:url({% static 'Images/SM.jpg' %}); background-size: cover;">
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-success">
 
@@ -53,12 +53,12 @@
   <div class="container contaner-fluid">
   {% if profit != "No match for this strategy" %}
   {% if profit > 0 %}
-  <h1 style=" background-color:#282828;">{{profit|floatformat:2}} %</h1>
+  <h1>{{profit|floatformat:2}} %</h1>
   {%else%}
-  <h1 style=" background-color:#282828;" class="loss">{{profit|floatformat:2}} %</h1>
+  <h1  class="loss">{{profit|floatformat:2}} %</h1>
   {%endif%}
   {% else %}
-  <h1  style=" background-color:#282828;" class="fail">{{profit}}</h1>
+  <h1  style="// background-color:#282828;" class="fail">{{profit}}</h1>
   {% endif %}
 
   {% if profit != "No match for this strategy" %}
