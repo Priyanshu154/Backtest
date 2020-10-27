@@ -2,10 +2,14 @@
   text-align: center;
   font-weight: bold;
   background-color: #282828;
-  color: #ffffff;
+  color: #aef682;
   letter-spacing: 2px;
 }
-
+.main{
+  width:70%;
+  height:100%;
+  color: #aef682;
+}
 .title{
   font-size: 48px;
   padding-top: 40px;
@@ -19,7 +23,7 @@ input{
   width: 325px;
   height: 35px;
   font-size: 18px;
-  color: #000000;
+  color: black;
   padding-left: 10px;
 }
 
@@ -44,10 +48,10 @@ p{
 .END{
   font-size: 18px;
   letter-spacing: 0px;
-  margin: 25 0 0 0px;
+  margin: 25 0 0 0;
 }
 
-.btn-primary{
+.btn-prime{
   background-color: #1c6288;
   font-size: 19px;
   border-radius: 5px;

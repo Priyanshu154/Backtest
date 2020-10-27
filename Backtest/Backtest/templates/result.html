@@ -4,7 +4,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Result</title>
   {% load static %}
-  
+
   <link rel="icon" href="{% static 'favicon.ico' %}">
   <!-- Fontawesome CDN -->
   <script src="https://kit.fontawesome.com/0c287f6377.js" crossorigin="anonymous"></script>
@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="{% static 'css/result_style.css' %}">
 </head>
 
-<body class="BODY">
+<body class="BODY" style="background-image:url({% static 'Images/SM.jpg' %})">
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-success">
 
@@ -48,17 +48,22 @@
       </ul>
     </div>
   </nav>
+
+<div class="container container-fluid">
+  <div class="container contaner-fluid">
   {% if profit != "No match for this strategy" %}
   {% if profit > 0 %}
   <h1>{{profit|floatformat:2}} %</h1>
   {%else%}
-  <h1 class="loss">{{profit|floatformat:2}} %</h1>
+  <h1 style=" background-color:#282828;" class="loss">{{profit|floatformat:2}} %</h1>
   {%endif%}
   {% else %}
-  <h1 class="fail">{{profit}}</h1>
+  <h1  style=" background-color:#282828;" class="fail">{{profit}}</h1>
   {% endif %}
 
   {% if profit != "No match for this strategy" %}
+</div>
+
   <table class="table table-hover table-dark">
     <thead>
       <tr>
@@ -93,9 +98,9 @@
 
   {%endif%}
   <a href="{% url 'home' %}" class="link">
-    <center style="margin-bottom: 30px; margin-top: 20px;">Go Back to Home</center>
+    <center style="margin-bottom: 30px; margin-top: 20px; background-color:#282828;">Go Back to Home</center>
   </a>
-
+</div>
   <!-- Bootstrap JS, JQUERY -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

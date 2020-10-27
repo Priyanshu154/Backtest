@@ -35,7 +35,7 @@
     </div>
   </nav>
   {% if user.is_authenticated %}
-  <h1 class="title"> Hi <span style="color:#aef682;">{{ request.user.username }}!!</span> Welcome to Stock-Mate <i class="fas fa-chart-line"></i></h1>
+  <h1 class="title" style="color: #aef682;"> Hi <span>{{ request.user.username }}!!</span> Welcome to Stock-Mate <i class="fas fa-chart-line"></i></h1>
   {% endif %}
 
   <form id="backtesting_form" method="POST" action="{% url 'result' %}" onsubmit="submit_form()">{%csrf_token%}

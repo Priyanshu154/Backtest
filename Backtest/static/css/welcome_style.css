@@ -31,6 +31,8 @@ p
 
 .main-div
 {
-  margin: 100 100 100 100px;
-  color: #ffffff;
+  color: #aef682;
+  background-color: #282828;
+  margin: 100 100 100 0px;
+  padding: 20px 30px;
 }
