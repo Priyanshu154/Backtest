@@ -1,38 +1,42 @@
-.BODY{
-font-weight: bold;
-background-color: #282828;
-color: #ffffff;
-letter-spacing: 2px;
-    font-size: 18px;
-    margin-left: 13.5%;
+.BODY {
+  font-weight: bold;
+  background-color: #282828;
+  color: #ffffff;
+  letter-spacing: 2px;
+  font-size: 18px;
+  margin-left: 13.5%;
 }
-
-input{
-width: 325px;
-font-size: 18px;
-color: #000000;
+.navbar
+{
+  
+}
+input {
+  width: 325px;
+  font-size: 18px;
+  color: #000000;
   margin-right: 30px;
-    padding-left: 10px;
-    height: 35px;
+  padding-left: 10px;
+  height: 35px;
+
 }
 
 select {
-    font-size: 16px;
-color: #000000;
-    margin-right: 35px;
-    height: 35px;
-width: 200px;
+  font-size: 16px;
+  color: #000000;
+  margin-right: 35px;
+  height: 35px;
+  width: 200px;
 }
 
 .title {
-font-size: 48px;
-padding-top: 25px;
+  font-size: 48px;
+  padding-top: 25px;
   padding-bottom: 25px;
-font-weight: bold;
-color: #faf9ae;
-letter-spacing: 2px;
-    text-align: center;
-    margin-left: -13.5%;
+  font-weight: bold;
+  color: #faf9ae;
+  letter-spacing: 2px;
+  text-align: center;
+  margin-left: -13.5%;
 }
 
 .LABEL {
@@ -56,7 +60,7 @@ letter-spacing: 2px;
   border: #ffffff;
 }
 
-.btn-success{
+.btn-success {
   margin-top: 10px;
 }
 
@@ -67,7 +71,8 @@ letter-spacing: 2px;
   margin-left: -13.5%;
   margin-right: 0px;
   padding: 0 0 0 0px;
-  height: 40px;;
+  height: 40px;
+  ;
 }
 
 .value {
