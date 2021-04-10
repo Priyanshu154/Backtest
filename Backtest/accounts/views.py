@@ -5,6 +5,7 @@ from django.contrib import auth
 # Create your views here.
 
 def signup(request):
+    # to check request is genuine or not
     if request.method=="POST":
         if request.POST['pass1'] == request.POST['pass2']:
             try:
